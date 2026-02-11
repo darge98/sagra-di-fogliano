@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -14,12 +14,29 @@ const navLinks = [
 
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-card/90 backdrop-blur-md border-b border-border">
-      <div className="mx-auto max-w-7xl flex items-center justify-between px-6 py-4">
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+        ? "bg-card/95 backdrop-blur-md border-b border-border py-4 shadow-sm"
+        : "bg-transparent border-transparent py-6"
+        }`}
+    >
+      <div className="mx-auto max-w-7xl flex items-center justify-between px-6">
         <a href="#home" className="flex items-center gap-2">
-          <span className="text-2xl font-serif font-bold text-primary">
+          <span
+            className={`text-2xl font-serif font-bold transition-colors ${scrolled ? "text-primary" : "text-primary-foreground"
+              }`}
+          >
             Sagra di Fogliano
           </span>
         </a>
@@ -30,7 +47,10 @@ export function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className="text-sm font-semibold uppercase tracking-wider text-foreground hover:text-primary transition-colors"
+              className={`text-sm font-semibold uppercase tracking-wider transition-colors ${scrolled
+                ? "text-foreground hover:text-primary"
+                : "text-primary-foreground/90 hover:text-white"
+                }`}
             >
               {link.label}
             </a>
@@ -41,7 +61,10 @@ export function Navbar() {
         <Button
           variant="ghost"
           size="icon"
-          className="md:hidden"
+          className={`md:hidden ${scrolled
+            ? "text-foreground hover:bg-muted"
+            : "text-primary-foreground hover:bg-white/10"
+            }`}
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label={mobileOpen ? "Chiudi menu" : "Apri menu"}
         >

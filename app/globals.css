@@ -23,6 +23,12 @@ body {
     --primary: 24 10% 10%;
     --primary-foreground: 35 20% 98%;
 
+    /* Card & Popover: Similar to background (light) */
+    --card: 35 20% 98%;
+    --card-foreground: 20 20% 12%;
+    --popover: 35 20% 98%;
+    --popover-foreground: 20 20% 12%;
+
     /* Sagra: Giallo Oro pieno (Energico ma non fastidioso) */
     --sagra: 56, 99%, 50%;
     --sagra-foreground: 24 10% 10%;

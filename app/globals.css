@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    /* Background: un grigio caldissimo, quasi sabbia molto chiara */
+    --background: 35 20% 98%;
+    --foreground: 20 20% 12%;
+
+    /* Primary: Un nero-marrone profondo (colore della terra o del legno bruciato) */
+    /* Questo sostituisce il verde e sta bene con TUTTO */
+    --primary: 24 10% 10%;
+    --primary-foreground: 35 20% 98%;
+
+    /* Sagra: Giallo Oro pieno (Energico ma non fastidioso) */
+    --sagra: 56, 99%, 50%;
+    --sagra-foreground: 24 10% 10%;
+    --sagra-muted: 45 100% 92%;
+
+    /* Sport: Fucsia Acceso (per i tornei) */
+    --sport: 330 85% 55%;
+    --sport-foreground: 0 0% 100%;
+    --sport-muted: 330 85% 96%;
+
+    /* UI Elements */
+    --secondary: 24 10% 20%;
+    /* Versione più chiara del primario */
+    --secondary-foreground: 35 20% 98%;
+
+    --muted: 35 10% 90%;
+    --muted-foreground: 24 10% 40%;
+
+    --accent: 45 100% 50%;
+    /* L'accento segue il giallo */
+    --accent-foreground: 24 10% 10%;
+
+    --border: 24 10% 85%;
+    --input: 24 10% 85%;
+    --ring: 45 100% 50%;
+
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}

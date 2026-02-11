@@ -22,32 +22,32 @@ const sportOptions = [
     label: "Calcio a 8",
     type: "squadra" as const,
     minPlayers: 8,
-    maxPlayers: 14,
-    hint: "Minimo 8, massimo 14 giocatori per squadra",
+    // maxPlayers removed to allow unlimited
+    hint: "Minimo 8 giocatori",
   },
   {
     value: "beachvolley",
     label: "Beach Volley",
     type: "squadra" as const,
-    minPlayers: 2,
-    maxPlayers: 6,
-    hint: "Minimo 2, massimo 6 giocatori per squadra",
+    minPlayers: 4,
+    // maxPlayers removed
+    hint: "Minimo 4 giocatori",
   },
   {
     value: "4fogliano",
-    label: "4Fogliano (Basket 4v4)",
+    label: "4Fogliano (Basket)",
     type: "squadra" as const,
     minPlayers: 4,
-    maxPlayers: 6,
-    hint: "Minimo 4, massimo 6 giocatori per squadra",
+    // maxPlayers removed
+    hint: "Minimo 4 giocatori",
   },
   {
     value: "lodolata",
     label: "Lodolata (Corsa)",
-    type: "gruppo" as const,
+    type: "individuale" as const,
     minPlayers: 1,
-    maxPlayers: 20,
-    hint: "Da 1 a 20 partecipanti per gruppo",
+    maxPlayers: 1,
+    hint: "Iscrizione individuale",
   },
 ]
 
@@ -55,10 +55,207 @@ interface TeamMember {
   id: string
   firstName: string
   lastName: string
+  gender: string
+  birthDate: string
+  birthPlace: string
+  address: string
+  medicalCertificate: File | null
 }
 
 function createMember(): TeamMember {
-  return { id: crypto.randomUUID(), firstName: "", lastName: "" }
+  return {
+    id: crypto.randomUUID(),
+    firstName: "",
+    lastName: "",
+    gender: "",
+    birthDate: "",
+    birthPlace: "",
+    address: "",
+    medicalCertificate: null,
+  }
+}
+
+interface MemberFieldsProps {
+  member: TeamMember
+  index: number
+  updateMember: (
+    id: string,
+    field: keyof TeamMember,
+    value: string | File | null
+  ) => void
+  removeMember: (id: string) => void
+  canRemove: boolean
+  showHeader?: boolean
+}
+
+function MemberFields({
+  member,
+  index,
+  updateMember,
+  removeMember,
+  canRemove,
+  showHeader = true,
+}: MemberFieldsProps) {
+  return (
+    <div className={`space-y-4 ${showHeader ? "rounded-lg border border-border bg-background p-6" : ""}`}>
+      {showHeader && (
+        <div className="flex items-center justify-between">
+          <span className="flex items-center justify-center h-6 w-6 rounded-full bg-muted text-muted-foreground text-xs font-bold">
+            {index + 1}
+          </span>
+          {canRemove && (
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
+              onClick={() => removeMember(member.id)}
+              aria-label={`Rimuovi componente ${index + 1}`}
+            >
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          )}
+        </div>
+      )}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="space-y-1">
+          <Label
+            htmlFor={`member-fn-${member.id}`}
+            className="text-foreground text-xs font-semibold"
+          >
+            Nome *
+          </Label>
+          <Input
+            id={`member-fn-${member.id}`}
+            value={member.firstName}
+            onChange={(e) => updateMember(member.id, "firstName", e.target.value)}
+            placeholder="Nome"
+            required
+            className="bg-card border-input h-9 text-sm"
+          />
+        </div>
+        <div className="space-y-1">
+          <Label
+            htmlFor={`member-ln-${member.id}`}
+            className="text-foreground text-xs font-semibold"
+          >
+            Cognome *
+          </Label>
+          <Input
+            id={`member-ln-${member.id}`}
+            value={member.lastName}
+            onChange={(e) => updateMember(member.id, "lastName", e.target.value)}
+            placeholder="Cognome"
+            required
+            className="bg-card border-input h-9 text-sm"
+          />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="space-y-1">
+          <Label
+            htmlFor={`member-gender-${member.id}`}
+            className="text-foreground text-xs font-semibold"
+          >
+            Sesso *
+          </Label>
+          <Select
+            value={member.gender}
+            onValueChange={(value) => updateMember(member.id, "gender", value)}
+            required
+          >
+            <SelectTrigger className="bg-card border-input h-9 text-sm">
+              <SelectValue placeholder="Sesso" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="M">Maschio</SelectItem>
+              <SelectItem value="F">Femmina</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="space-y-1">
+          <Label
+            htmlFor={`member-dob-${member.id}`}
+            className="text-foreground text-xs font-semibold"
+          >
+            Data di Nascita *
+          </Label>
+          <Input
+            id={`member-dob-${member.id}`}
+            type="date"
+            value={member.birthDate}
+            onChange={(e) => updateMember(member.id, "birthDate", e.target.value)}
+            required
+            className="bg-card border-input h-9 text-sm"
+          />
+        </div>
+        <div className="space-y-1">
+          <Label
+            htmlFor={`member-pob-${member.id}`}
+            className="text-foreground text-xs font-semibold"
+          >
+            Luogo di Nascita *
+          </Label>
+          <Input
+            id={`member-pob-${member.id}`}
+            value={member.birthPlace}
+            onChange={(e) => updateMember(member.id, "birthPlace", e.target.value)}
+            placeholder="Città"
+            required
+            className="bg-card border-input h-9 text-sm"
+          />
+        </div>
+      </div>
+
+      <div className="space-y-1">
+        <Label
+          htmlFor={`member-addr-${member.id}`}
+          className="text-foreground text-xs font-semibold"
+        >
+          Indirizzo di Residenza *
+        </Label>
+        <Input
+          id={`member-addr-${member.id}`}
+          value={member.address}
+          onChange={(e) => updateMember(member.id, "address", e.target.value)}
+          placeholder="Via Roma 1, Reggio Emilia"
+          required
+          className="bg-card border-input h-9 text-sm"
+        />
+      </div>
+
+      <div className="space-y-1">
+        <Label
+          htmlFor={`member-cert-${member.id}`}
+          className="text-foreground text-xs font-semibold"
+        >
+          Certificato Medico (PDF/FOTO) *
+        </Label>
+        <Input
+          id={`member-cert-${member.id}`}
+          type="file"
+          accept="image/*,.pdf"
+          onChange={(e) =>
+            updateMember(
+              member.id,
+              "medicalCertificate",
+              e.target.files ? e.target.files[0] : null
+            )
+          }
+          required={!member.medicalCertificate}
+          className="bg-card border-input h-9 text-sm cursor-pointer file:text-foreground hover:file:bg-accent file:bg-transparent file:border-0 file:mr-4 file:font-semibold"
+        />
+        {member.medicalCertificate && (
+          <p className="text-xs text-green-600 flex items-center gap-1 mt-1">
+            <CheckCircle2 className="h-3 w-3" />
+            File caricato: {member.medicalCertificate.name}
+          </p>
+        )}
+      </div>
+    </div>
+  )
 }
 
 export function RegistrationForm() {
@@ -76,14 +273,16 @@ export function RegistrationForm() {
     setSelectedSport(value)
     const newSport = sportOptions.find((s) => s.value === value)
     if (newSport) {
-      const initial = newSport.type === "coppia" ? 2 : 1
-      setMembers(Array.from({ length: initial }, () => createMember()))
+      setMembers(Array.from({ length: newSport.minPlayers }, () => createMember()))
     }
   }
 
   function addMember() {
-    if (sport && members.length < sport.maxPlayers) {
-      setMembers([...members, createMember()])
+    if (sport) {
+      // Allow adding if no maxPlayers defined or if below maxPlayers
+      if (!sport.maxPlayers || members.length < sport.maxPlayers) {
+        setMembers([...members, createMember()])
+      }
     }
   }
 
@@ -93,7 +292,11 @@ export function RegistrationForm() {
     }
   }
 
-  function updateMember(id: string, field: "firstName" | "lastName", value: string) {
+  function updateMember(
+    id: string,
+    field: keyof TeamMember,
+    value: string | File | null
+  ) {
     setMembers(
       members.map((m) => (m.id === id ? { ...m, [field]: value } : m))
     )
@@ -124,11 +327,16 @@ export function RegistrationForm() {
               Iscrizione Inviata!
             </h2>
             <p className="text-muted-foreground leading-relaxed">
-              Grazie per aver iscritto la{" "}
-              {sport?.type === "coppia" ? "vostra coppia" : sport?.type === "gruppo" ? "vostra squadra" : "vostra squadra"}{" "}
-              <strong className="text-foreground">{teamName}</strong> al{" "}
-              <strong className="text-foreground">{sport?.label}</strong>!
-              Vi contatteremo via email per confermare la partecipazione.
+              Grazie per aver inviato l{"'"}iscrizione
+              {sport?.type !== "individuale" && (
+                <>
+                  {" "}
+                  per la squadra{" "}
+                  <strong className="text-foreground">{teamName}</strong>
+                </>
+              )}{" "}
+              al <strong className="text-foreground">{sport?.label}</strong>! Vi
+              contatteremo via email per confermare la partecipazione.
             </p>
             <Button
               onClick={resetForm}
@@ -142,12 +350,11 @@ export function RegistrationForm() {
     )
   }
 
-  const teamLabel =
-    sport?.type === "gruppo"
-      ? "Nome del Gruppo"
-      : "Nome della Squadra"
+  const teamLabel = "Nome della Squadra"
 
-  const canAddMore = sport ? members.length < sport.maxPlayers : false
+  const isIndividual = sport?.type === "individuale"
+
+  const canAddMore = sport ? (sport.maxPlayers ? members.length < sport.maxPlayers : true) : false
   const canRemove = sport ? members.length > sport.minPlayers : false
 
   return (
@@ -159,12 +366,11 @@ export function RegistrationForm() {
             Partecipa
           </p>
           <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground text-balance">
-            Iscrivi la tua Squadra
+            {isIndividual ? "Iscriviti alla Lodolata" : "Iscrivi la tua Squadra"}
           </h2>
           <p className="mt-4 text-muted-foreground max-w-xl mx-auto leading-relaxed">
-            Compila il modulo per iscrivere la tua squadra, coppia o gruppo
-            al torneo sportivo. Vi ricontatteremo per confermare la
-            partecipazione.
+            Compila il modulo per iscriverti al torneo sportivo. Vi
+            ricontatteremo per confermare la partecipazione.
           </p>
         </div>
 
@@ -209,31 +415,33 @@ export function RegistrationForm() {
 
           {selectedSport && (
             <>
-              {/* Step 2 - Team info */}
+              {/* Step 2 - Team/Contact info */}
               <div>
                 <h3 className="font-serif text-lg font-bold text-foreground mb-1 flex items-center gap-2">
                   <span className="flex items-center justify-center h-7 w-7 rounded-full bg-sport text-sport-foreground text-xs font-bold">
                     2
                   </span>
-                  Informazioni squadra
+                  {isIndividual ? "Informazioni Contatto" : "Informazioni squadra"}
                 </h3>
                 <div className="ml-9 mt-3 space-y-4">
-                  <div className="space-y-2">
-                    <Label
-                      htmlFor="teamName"
-                      className="text-foreground font-semibold"
-                    >
-                      {teamLabel} *
-                    </Label>
-                    <Input
-                      id="teamName"
-                      value={teamName}
-                      onChange={(e) => setTeamName(e.target.value)}
-                      placeholder={`Inserisci il ${teamLabel.toLowerCase()}`}
-                      required
-                      className="bg-background border-input"
-                    />
-                  </div>
+                  {!isIndividual && (
+                    <div className="space-y-2">
+                      <Label
+                        htmlFor="teamName"
+                        className="text-foreground font-semibold"
+                      >
+                        {teamLabel} *
+                      </Label>
+                      <Input
+                        id="teamName"
+                        value={teamName}
+                        onChange={(e) => setTeamName(e.target.value)}
+                        placeholder={`Inserisci il ${teamLabel.toLowerCase()}`}
+                        required={!isIndividual}
+                        className="bg-background border-input"
+                      />
+                    </div>
+                  )}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label
@@ -270,112 +478,61 @@ export function RegistrationForm() {
                       />
                     </div>
                   </div>
-                </div>
-              </div>
 
-              {/* Step 3 - Members */}
-              <div>
-                <h3 className="font-serif text-lg font-bold text-foreground mb-1 flex items-center gap-2">
-                  <span className="flex items-center justify-center h-7 w-7 rounded-full bg-sport text-sport-foreground text-xs font-bold">
-                    3
-                  </span>
-                  Componenti della squadra
-                </h3>
-                <div className="ml-9 mt-3 space-y-3">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
-                    <Users className="h-4 w-4 text-sport" />
-                    <span>
-                      {members.length}{" "}
-                      {members.length === 1
-                        ? "componente"
-                        : "componenti"}{" "}
-                      {sport &&
-                        `(min ${sport.minPlayers}, max ${sport.maxPlayers})`}
-                    </span>
-                  </div>
-
-                  {members.map((member, index) => (
-                    <div
-                      key={member.id}
-                      className="flex items-end gap-3 rounded-lg border border-border bg-background p-4"
-                    >
-                      <span className="shrink-0 flex items-center justify-center h-6 w-6 rounded-full bg-muted text-muted-foreground text-xs font-bold">
-                        {index + 1}
-                      </span>
-                      <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div className="space-y-1">
-                          <Label
-                            htmlFor={`member-fn-${member.id}`}
-                            className="text-foreground text-xs font-semibold"
-                          >
-                            Nome *
-                          </Label>
-                          <Input
-                            id={`member-fn-${member.id}`}
-                            value={member.firstName}
-                            onChange={(e) =>
-                              updateMember(
-                                member.id,
-                                "firstName",
-                                e.target.value
-                              )
-                            }
-                            placeholder="Nome"
-                            required
-                            className="bg-card border-input h-9 text-sm"
-                          />
-                        </div>
-                        <div className="space-y-1">
-                          <Label
-                            htmlFor={`member-ln-${member.id}`}
-                            className="text-foreground text-xs font-semibold"
-                          >
-                            Cognome *
-                          </Label>
-                          <Input
-                            id={`member-ln-${member.id}`}
-                            value={member.lastName}
-                            onChange={(e) =>
-                              updateMember(
-                                member.id,
-                                "lastName",
-                                e.target.value
-                              )
-                            }
-                            placeholder="Cognome"
-                            required
-                            className="bg-card border-input h-9 text-sm"
-                          />
-                        </div>
-                      </div>
-                      {canRemove && (
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon"
-                          className="shrink-0 h-9 w-9 text-destructive hover:text-destructive hover:bg-destructive/10"
-                          onClick={() => removeMember(member.id)}
-                          aria-label={`Rimuovi componente ${index + 1}`}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      )}
+                  {isIndividual && members[0] && (
+                    <div className="mt-4 pt-4 border-t border-border">
+                      <Label className="text-foreground font-semibold mb-4 block">
+                        Dati Partecipante
+                      </Label>
+                      <MemberFields
+                        member={members[0]}
+                        index={0}
+                        updateMember={updateMember}
+                        removeMember={removeMember}
+                        canRemove={false}
+                        showHeader={false}
+                      />
                     </div>
-                  ))}
-
-                  {canAddMore && (
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={addMember}
-                      className="w-full border-dashed border-border text-muted-foreground hover:text-foreground bg-transparent"
-                    >
-                      <Plus className="h-4 w-4 mr-2" />
-                      Aggiungi componente
-                    </Button>
                   )}
                 </div>
               </div>
+
+              {/* Step 3 - Members (Only for teams) */}
+              {!isIndividual && (
+                <div>
+                  <h3 className="font-serif text-lg font-bold text-foreground mb-1 flex items-center gap-2">
+                    <span className="flex items-center justify-center h-7 w-7 rounded-full bg-sport text-sport-foreground text-xs font-bold">
+                      3
+                    </span>
+                    Componenti della squadra
+                  </h3>
+                  <div className="ml-9 mt-3 space-y-3">
+                    {members.map((member, index) => (
+                      <MemberFields
+                        key={member.id}
+                        member={member}
+                        index={index}
+                        updateMember={updateMember}
+                        removeMember={removeMember}
+                        canRemove={sport ? index >= sport.minPlayers : false}
+                        showHeader={true}
+                      />
+                    ))}
+
+                    {canAddMore && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={addMember}
+                        className="w-full border-dashed border-border text-muted-foreground hover:text-foreground bg-transparent mt-4"
+                      >
+                        <Plus className="h-4 w-4 mr-2" />
+                        Aggiungi componente
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              )}
 
               {/* Notes */}
               <div className="ml-9 space-y-2">
@@ -402,7 +559,7 @@ export function RegistrationForm() {
                 className="w-full bg-sport text-sport-foreground hover:bg-sport/90 font-bold text-base"
               >
                 <Send className="h-4 w-4 mr-2" />
-                Invia Iscrizione Squadra
+                Invia Iscrizione {isIndividual ? "" : "Squadra"}
               </Button>
 
               <p className="text-xs text-muted-foreground text-center">

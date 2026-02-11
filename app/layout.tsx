@@ -1,6 +1,7 @@
 import React from "react"
 import type { Metadata, Viewport } from 'next'
 import { Playfair_Display, Lato } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next'
 
 import './globals.css'
 
@@ -35,6 +36,7 @@ export default function RootLayout({
         className={`${_playfair.variable} ${_lato.variable} font-sans antialiased`}
       >
         {children}
+        <Analytics />
       </body>
     </html>
   )

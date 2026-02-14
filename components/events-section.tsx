@@ -23,6 +23,36 @@ import {
   Beer,
 } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
+import festivalDaysData from "@/data/sagra-cards.json"
+
+interface DayEventData {
+  time: string
+  title: string
+  description?: string
+  icon: string
+  highlight?: boolean
+}
+
+interface FestivalDayData {
+  id: string
+  dayShort: string
+  dayNumber: string
+  dayName: string
+  date: string
+  tagline: string
+  events: DayEventData[]
+}
+
+const iconMap: Record<string, LucideIcon> = {
+  Baby,
+  UtensilsCrossed,
+  Music,
+  Camera,
+  Sparkles,
+  BookOpen,
+  Beer,
+  Theater,
+}
 
 interface DayEvent {
   time: string
@@ -42,107 +72,13 @@ interface FestivalDay {
   events: DayEvent[]
 }
 
-const festivalDays: FestivalDay[] = [
-  {
-    id: "sabato",
-    dayShort: "SAB",
-    dayNumber: "14",
-    dayName: "Sabato",
-    date: "14 Giugno 2025",
-    tagline: "Musica Live, Bancarelle e Gonfiabili",
-    events: [
-      {
-        time: "15:30",
-        title: "Attivita per bambini e ragazzi",
-        description:
-          "Al parco del Centro Sociale, via Nervi 23. Bancarelle e gonfiabili per bambini.",
-        icon: Baby,
-      },
-      {
-        time: "19:30",
-        title: "Apertura bar, birreria e cucina",
-        description:
-          "Gnocco fritto, tigelle, tortellini e tutte le specialita emiliane.",
-        icon: UtensilsCrossed,
-      },
-      {
-        time: "20:00",
-        title: "MUSICA LIVE",
-        description: "THEM DUO e JEFF & THE BRODMANNS sul palco principale.",
-        icon: Music,
-        highlight: true,
-      },
-    ],
-  },
-  {
-    id: "domenica",
-    dayShort: "DOM",
-    dayNumber: "15",
-    dayName: "Domenica",
-    date: "15 Giugno 2025",
-    tagline: "Magia, Tango e Mostra Fotografica",
-    events: [
-      {
-        time: "15:30",
-        title: 'Visita guidata alla mostra fotografica "DA DOVE VENIAMO"',
-        icon: Camera,
-      },
-      {
-        time: "17:00",
-        title: "Giochi per bambini",
-        icon: Baby,
-      },
-      {
-        time: "19:00",
-        title: "SPETTACOLO DI MAGIA con il Mago Pitti",
-        icon: Sparkles,
-        highlight: true,
-      },
-      {
-        time: "19:30",
-        title: "Apertura bar, birreria e cucina",
-        icon: UtensilsCrossed,
-      },
-      {
-        time: "20:30",
-        title: "SERATA TANGO",
-        description: "...molto piu di un ballo!",
-        icon: Music,
-        highlight: true,
-      },
-    ],
-  },
-  {
-    id: "lunedi",
-    dayShort: "LUN",
-    dayNumber: "16",
-    dayName: "Lunedi",
-    date: "16 Giugno 2025",
-    tagline: "Libri, Cucina e Cabaret Dialettale",
-    events: [
-      {
-        time: "18:30",
-        title:
-          'Presentazione del libro "Il nome di Dio non e piu Dio"',
-        description:
-          "L'autore don Paolo Cugini dialoga con Mattia Mariani e Antonio De Caro.",
-        icon: BookOpen,
-        highlight: true,
-      },
-      {
-        time: "19:30",
-        title: "Apertura bar e cucina",
-        icon: Beer,
-      },
-      {
-        time: "21:00",
-        title: "CABARET DIALETTALE",
-        icon: Theater,
-        highlight: true,
-      },
-    ],
-  },
-]
+const festivalDays: FestivalDay[] = (festivalDaysData as FestivalDayData[]).map((day) => ({
+  ...day,
+  events: day.events.map((event) => ({
+    ...event,
+    icon: iconMap[event.icon] || Music, // Fallback icon
+  })),
+}))
 
 export function EventsSection() {
   const [selectedDay, setSelectedDay] = useState<FestivalDay | null>(null)

@@ -1,0 +1,97 @@
+[
+    {
+        "id": "sabato",
+        "dayShort": "SAB",
+        "dayNumber": "14",
+        "dayName": "Sabato",
+        "date": "14 Giugno 2025",
+        "tagline": "Musica Live, Bancarelle e Gonfiabili",
+        "events": [
+            {
+                "time": "15:30",
+                "title": "Attività per bambini e ragazzi",
+                "description": "Al parco del Centro Sociale, via Nervi 23. Bancarelle e gonfiabili per bambini.",
+                "icon": "Baby"
+            },
+            {
+                "time": "19:30",
+                "title": "Apertura bar, birreria e cucina",
+                "description": "Gnocco fritto, tigelle, tortellini e tutte le specialità emiliane.",
+                "icon": "UtensilsCrossed"
+            },
+            {
+                "time": "20:00",
+                "title": "MUSICA LIVE",
+                "description": "THEM DUO e JEFF & THE BRODMANNS sul palco principale.",
+                "icon": "Music",
+                "highlight": true
+            }
+        ]
+    },
+    {
+        "id": "domenica",
+        "dayShort": "DOM",
+        "dayNumber": "15",
+        "dayName": "Domenica",
+        "date": "15 Giugno 2025",
+        "tagline": "Magia, Tango e Mostra Fotografica",
+        "events": [
+            {
+                "time": "15:30",
+                "title": "Visita guidata alla mostra fotografica \"DA DOVE VENIAMO\"",
+                "icon": "Camera"
+            },
+            {
+                "time": "17:00",
+                "title": "Giochi per bambini",
+                "icon": "Baby"
+            },
+            {
+                "time": "19:00",
+                "title": "SPETTACOLO DI MAGIA con il Mago Pitti",
+                "icon": "Sparkles",
+                "highlight": true
+            },
+            {
+                "time": "19:30",
+                "title": "Apertura bar, birreria e cucina",
+                "icon": "UtensilsCrossed"
+            },
+            {
+                "time": "20:30",
+                "title": "SERATA TANGO",
+                "description": "...molto più di un ballo!",
+                "icon": "Music",
+                "highlight": true
+            }
+        ]
+    },
+    {
+        "id": "lunedi",
+        "dayShort": "LUN",
+        "dayNumber": "16",
+        "dayName": "Lunedì",
+        "date": "16 Giugno 2025",
+        "tagline": "Libri, Cucina e Cabaret Dialettale",
+        "events": [
+            {
+                "time": "18:30",
+                "title": "Presentazione del libro \"Il nome di Dio non è più Dio\"",
+                "description": "L'autore don Paolo Cugini dialoga con Mattia Mariani e Antonio De Caro.",
+                "icon": "BookOpen",
+                "highlight": true
+            },
+            {
+                "time": "19:30",
+                "title": "Apertura bar e cucina",
+                "icon": "Beer"
+            },
+            {
+                "time": "21:00",
+                "title": "CABARET DIALETTALE",
+                "icon": "Theater",
+                "highlight": true
+            }
+        ]
+    }
+]

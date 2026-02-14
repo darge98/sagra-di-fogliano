@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbo",
-    "build": "next build",
+    "fetch-data": "npx tsx scripts/fetch-sheets.ts",
+    "prebuild": "npx tsx scripts/fetch-sheets.ts",
+    "build": "pnpm run prebuild && next build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -42,6 +44,7 @@
     "clsx": "^2.1.1",
     "cmdk": "1.1.1",
     "date-fns": "4.1.0",
+    "dotenv": "^17.3.1",
     "embla-carousel-react": "8.5.1",
     "input-otp": "1.4.1",
     "lucide-react": "^0.544.0",
@@ -64,8 +67,10 @@
     "@types/node": "^22",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
+    "googleapis": "^171.4.0",
     "postcss": "^8.5",
     "tailwindcss": "^3.4.17",
+    "tsx": "^4.21.0",
     "typescript": "5.7.3"
   },
   "pnpm": {

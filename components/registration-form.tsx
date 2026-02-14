@@ -14,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { CheckCircle2, Send, Plus, Trash2, Users } from "lucide-react"
+import { CheckCircle2, Loader2, Send, Plus, Trash2, Users } from "lucide-react"
 
 const sportOptions = [
   {
@@ -260,12 +260,13 @@ function MemberFields({
 
 export function RegistrationForm() {
   const [submitted, setSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
   const [selectedSport, setSelectedSport] = useState("")
   const [teamName, setTeamName] = useState("")
   const [contactEmail, setContactEmail] = useState("")
   const [contactPhone, setContactPhone] = useState("")
   const [members, setMembers] = useState<TeamMember[]>([createMember()])
-  const [notes, setNotes] = useState("")
 
   const sport = sportOptions.find((s) => s.value === selectedSport)
 
@@ -309,12 +310,52 @@ export function RegistrationForm() {
     setContactEmail("")
     setContactPhone("")
     setMembers([createMember()])
-    setNotes("")
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setSubmitted(true)
+    if (!sport) return
+    setSubmitError(null)
+    setIsSubmitting(true)
+    try {
+      const formData = new FormData()
+      formData.set("sport", selectedSport)
+      formData.set("sportLabel", sport.label)
+      formData.set("teamName", teamName)
+      formData.set("contactEmail", contactEmail)
+      formData.set("contactPhone", contactPhone)
+      formData.set(
+        "members",
+        JSON.stringify(
+          members.map((m) => ({
+            firstName: m.firstName,
+            lastName: m.lastName,
+            gender: m.gender,
+            birthDate: m.birthDate,
+            birthPlace: m.birthPlace,
+            address: m.address,
+          }))
+        )
+      )
+      members.forEach((m, i) => {
+        if (m.medicalCertificate) {
+          formData.set(`certificate_${i}`, m.medicalCertificate)
+        }
+      })
+      const res = await fetch("/api/register", {
+        method: "POST",
+        body: formData,
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        throw new Error(data.error || "Errore durante l'invio dell'iscrizione")
+      }
+      setSubmitted(true)
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : "Errore di connessione. Riprova.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   if (submitted) {
@@ -534,32 +575,32 @@ export function RegistrationForm() {
                 </div>
               )}
 
-              {/* Notes */}
-              <div className="ml-9 space-y-2">
-                <Label
-                  htmlFor="notes"
-                  className="text-foreground font-semibold"
-                >
-                  Note aggiuntive
-                </Label>
-                <Textarea
-                  id="notes"
-                  value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
-                  placeholder="Richieste particolari, informazioni aggiuntive..."
-                  rows={3}
-                  className="bg-background border-input resize-none"
-                />
-              </div>
+              
+
+              {submitError && (
+                <div className="rounded-lg border border-destructive/50 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+                  {submitError}
+                </div>
+              )}
 
               {/* Submit */}
               <Button
                 type="submit"
                 size="lg"
+                disabled={isSubmitting}
                 className="w-full bg-sport text-sport-foreground hover:bg-sport/90 font-bold text-base"
               >
-                <Send className="h-4 w-4 mr-2" />
-                Invia Iscrizione {isIndividual ? "" : "Squadra"}
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Invio in corso...
+                  </>
+                ) : (
+                  <>
+                    <Send className="h-4 w-4 mr-2" />
+                    Invia Iscrizione {isIndividual ? "" : "Squadra"}
+                  </>
+                )}
               </Button>
 
               <p className="text-xs text-muted-foreground text-center">

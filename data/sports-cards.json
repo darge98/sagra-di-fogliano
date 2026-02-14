@@ -1,0 +1,118 @@
+[
+    {
+        "id": "calcio",
+        "title": "Calcio a 8",
+        "icon": "Footprints",
+        "date": "18 - 22 Giugno",
+        "time": "19:00",
+        "description": "Torneo di calcio a 8 con gironi eliminatori e fase finale. Premi per le prime classificate.",
+        "prize": "Trofeo + Premi",
+        "details": [
+            {
+                "label": "Regolamento",
+                "value": "8 giocatori per squadra + 4 riserve. Partite da 2 tempi da 20 minuti."
+            },
+            {
+                "label": "Gironi",
+                "value": "18 - 19 Giugno"
+            },
+            {
+                "label": "Semifinali",
+                "value": "20 giugno"
+            },
+            {
+                "label": "Finale",
+                "value": "22 giugno"
+            },
+            {
+                "label": "Costo iscrizione",
+                "value": "€50 a squadra"
+            }
+        ]
+    },
+    {
+        "id": "beachvolley",
+        "title": "Beach Volley",
+        "icon": "Volleyball",
+        "date": "18 - 22 Giugno",
+        "time": "19:00",
+        "description": "Beach volley sulla sabbia! Divertimento e competizione assicurati per tutti.",
+        "prize": "Trofeo + Premi",
+        "details": [
+            {
+                "label": "Regolamento",
+                "value": "Squadre da 4 giocatori. Set da 21 punti."
+            },
+            {
+                "label": "Gironi",
+                "value": "18 - 19 Giugno"
+            },
+            {
+                "label": "Semifinali",
+                "value": "20 giugno"
+            },
+            {
+                "label": "Finale",
+                "value": "22 giugno"
+            },
+            {
+                "label": "Costo iscrizione",
+                "value": "€30 a squadra"
+            }
+        ]
+    },
+    {
+        "id": "4fogliano",
+        "title": "4Fogliano",
+        "icon": "Dribbble",
+        "date": "18 - 22 Giugno",
+        "time": "19:00",
+        "description": "Il torneo di basket 4 contro 4 targato Fogliano. Sfide rapide e spettacolari!",
+        "prize": "Trofeo + Premi",
+        "details": [
+            {
+                "label": "Regolamento",
+                "value": "4 giocatori per squadra + 2 riserve. Partite da 2 tempi da 10 minuti."
+            },
+            {
+                "label": "Gironi",
+                "value": "18 - 19 Giugno"
+            },
+            {
+                "label": "Semifinali",
+                "value": "20 giugno"
+            },
+            {
+                "label": "Finale",
+                "value": "22 giugno"
+            },
+            {
+                "label": "Costo iscrizione",
+                "value": "€30 a squadra"
+            }
+        ]
+    },
+    {
+        "id": "lodolata",
+        "title": "Lodolata",
+        "icon": "Footprints",
+        "date": "18 - 22 Giugno",
+        "time": "19:00",
+        "description": "La corsa di Fogliano! Un percorso attraverso le strade e le campagne del paese.",
+        "prize": "Medaglie e Premi",
+        "details": [
+            {
+                "label": "Regolamento",
+                "value": "Corsa non competitiva aperta a tutti. Percorso di 5 km."
+            },
+            {
+                "label": "Data gara",
+                "value": "21 giugno"
+            },
+            {
+                "label": "Costo iscrizione",
+                "value": "€10 a persona"
+            }
+        ]
+    }
+]

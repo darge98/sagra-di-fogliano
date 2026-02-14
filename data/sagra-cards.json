@@ -1,0 +1,319 @@
+[
+    {
+        "id": "sabato",
+        "dayShort": "SAB",
+        "dayNumber": "13",
+        "date": "Giugno 2026",
+        "tagline": "Musica Live, Bancarelle e Gonfiabili",
+        "events": [
+            {
+                "time": "15:30",
+                "title": "parco giochi bimbi",
+                "icon": "Baby",
+                "description": "Al parco del Centro Sociale, via Nervi 23. Bancarelle e gonfiabili per bambini."
+            },
+            {
+                "time": "19:30",
+                "title": "Apertura bar, birreria e cucina",
+                "icon": "UtensilsCrossed",
+                "description": "Gnocco fritto, tigelle, tortellini e tutte le specialità emiliane."
+            },
+            {
+                "time": "20:00",
+                "title": "MUSICA LIVE",
+                "icon": "Music",
+                "description": "THEM DUO e JEFF & THE BRODMANNS sul palco principale.",
+                "highlight": true
+            }
+        ],
+        "menu": [
+            {
+                "category": "Primi",
+                "items": [
+                    {
+                        "name": "Tortellini in brodo",
+                        "price": "€7",
+                        "vegan": true,
+                        "glutenFree": true,
+                        "spicy": true
+                    },
+                    {
+                        "name": "Tortelloni burro e salvia",
+                        "price": "€7"
+                    },
+                    {
+                        "name": "Gramigna al ragù",
+                        "price": "€7"
+                    }
+                ]
+            },
+            {
+                "category": "Secondi e Contorni",
+                "items": [
+                    {
+                        "name": "Costine alla griglia",
+                        "price": "€8"
+                    },
+                    {
+                        "name": "Salsiccia alla griglia",
+                        "price": "€6"
+                    },
+                    {
+                        "name": "Patatine fritte",
+                        "price": "€4"
+                    },
+                    {
+                        "name": "Insalata mista",
+                        "price": "€4"
+                    }
+                ]
+            },
+            {
+                "category": "Crescentine e Gnocco",
+                "items": [
+                    {
+                        "name": "Gnocco fritto",
+                        "price": "€5"
+                    },
+                    {
+                        "name": "Tigelle con salumi",
+                        "price": "€6"
+                    }
+                ]
+            },
+            {
+                "category": "Bevande",
+                "items": [
+                    {
+                        "name": "Acqua",
+                        "price": "€1"
+                    },
+                    {
+                        "name": "Bibite",
+                        "price": "€2.50"
+                    },
+                    {
+                        "name": "Birra alla spina",
+                        "price": "€4"
+                    },
+                    {
+                        "name": "Vino (calice)",
+                        "price": "€3"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "domenica",
+        "dayShort": "DOM",
+        "dayNumber": "15",
+        "date": "Giugno 2027",
+        "tagline": "Magia, Tango e Mostra Fotografica",
+        "events": [
+            {
+                "time": "15:30",
+                "title": "Visita guidata alla mostra fotografica \"DA DOVE VENIAMO\"",
+                "icon": "Camera"
+            },
+            {
+                "time": "17:00",
+                "title": "Giochi per bambini",
+                "icon": "Baby"
+            },
+            {
+                "time": "19:00",
+                "title": "SPETTACOLO DI MAGIA con il Mago Pitti",
+                "icon": "Sparkles",
+                "highlight": true
+            },
+            {
+                "time": "19:30",
+                "title": "Apertura bar, birreria e cucina",
+                "icon": "UtensilsCrossed"
+            },
+            {
+                "time": "20:30",
+                "title": "SERATA TANGO",
+                "icon": "Music",
+                "description": "...molto più di un ballo!",
+                "highlight": true
+            }
+        ],
+        "menu": [
+            {
+                "category": "Primi",
+                "items": [
+                    {
+                        "name": "Tortellini in brodo",
+                        "price": "€7"
+                    },
+                    {
+                        "name": "Tortelloni burro e salvia",
+                        "price": "€7"
+                    },
+                    {
+                        "name": "Gramigna al ragù",
+                        "price": "€7"
+                    }
+                ]
+            },
+            {
+                "category": "Secondi e Contorni",
+                "items": [
+                    {
+                        "name": "Costine alla griglia",
+                        "price": "€8"
+                    },
+                    {
+                        "name": "Salsiccia alla griglia",
+                        "price": "€6"
+                    },
+                    {
+                        "name": "Patatine fritte",
+                        "price": "€4"
+                    },
+                    {
+                        "name": "Insalata mista",
+                        "price": "€4"
+                    }
+                ]
+            },
+            {
+                "category": "Crescentine e Gnocco",
+                "items": [
+                    {
+                        "name": "Gnocco fritto",
+                        "price": "€5"
+                    },
+                    {
+                        "name": "Tigelle con salumi",
+                        "price": "€6"
+                    }
+                ]
+            },
+            {
+                "category": "Bevande",
+                "items": [
+                    {
+                        "name": "Acqua",
+                        "price": "€1"
+                    },
+                    {
+                        "name": "Bibite",
+                        "price": "€2.50"
+                    },
+                    {
+                        "name": "Birra alla spina",
+                        "price": "€4"
+                    },
+                    {
+                        "name": "Vino (calice)",
+                        "price": "€3"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "lunedi",
+        "dayShort": "LUN",
+        "dayNumber": "16",
+        "date": "Giugno 2028",
+        "tagline": "Libri, Cucina e Cabaret Dialettale",
+        "events": [
+            {
+                "time": "18:30",
+                "title": "Presentazione del libro \"Il nome di Dio non è più Dio\"",
+                "icon": "BookOpen",
+                "description": "L'autore don Paolo Cugini dialoga con Mattia Mariani e Antonio De Caro.",
+                "highlight": true
+            },
+            {
+                "time": "19:30",
+                "title": "Apertura bar e cucina",
+                "icon": "Beer"
+            },
+            {
+                "time": "21:00",
+                "title": "CABARET DIALETTALE",
+                "icon": "Theater",
+                "highlight": true
+            }
+        ],
+        "menu": [
+            {
+                "category": "Primi",
+                "items": [
+                    {
+                        "name": "Tortellini in brodo",
+                        "price": "€7"
+                    },
+                    {
+                        "name": "Tortelloni burro e salvia",
+                        "price": "€7"
+                    },
+                    {
+                        "name": "Gramigna al ragù",
+                        "price": "€7"
+                    }
+                ]
+            },
+            {
+                "category": "Secondi e Contorni",
+                "items": [
+                    {
+                        "name": "Costine alla griglia",
+                        "price": "€8"
+                    },
+                    {
+                        "name": "Salsiccia alla griglia",
+                        "price": "€6"
+                    },
+                    {
+                        "name": "Patatine fritte",
+                        "price": "€4"
+                    },
+                    {
+                        "name": "Insalata mista",
+                        "price": "€4"
+                    }
+                ]
+            },
+            {
+                "category": "Crescentine e Gnocco",
+                "items": [
+                    {
+                        "name": "Gnocco fritto",
+                        "price": "€5"
+                    },
+                    {
+                        "name": "Tigelle con salumi",
+                        "price": "€6"
+                    }
+                ]
+            },
+            {
+                "category": "Bevande",
+                "items": [
+                    {
+                        "name": "Acqua",
+                        "price": "€1"
+                    },
+                    {
+                        "name": "Bibite",
+                        "price": "€2.50"
+                    },
+                    {
+                        "name": "Birra alla spina",
+                        "price": "€4"
+                    },
+                    {
+                        "name": "Vino (calice)",
+                        "price": "€3"
+                    }
+                ]
+            }
+        ]
+    }
+]

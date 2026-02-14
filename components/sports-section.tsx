@@ -2,49 +2,40 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { CalendarDays, Clock, Trophy, Footprints, Dribbble, PersonStanding, Volleyball } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
+import sportEventsData from "@/data/sports-cards.json"
 
-const sportEvents = [
-  {
-    id: "calcio",
-    title: "Calcio a 8",
-    icon: Footprints as LucideIcon,
-    date: "18 - 22 Giugno",
-    time: "19:00",
-    description:
-      "Torneo di calcio a 8 con gironi eliminatori e fase finale. Premi per le prime classificate.",
-    prize: "Trofeo + Premi",
-  },
-  {
-    id: "beachvolley",
-    title: "Beach Volley",
-    icon: Volleyball as LucideIcon,
-    date: "18 - 22 Giugno",
-    time: "19:00",
-    description:
-      "Beach volley sulla sabbia! Divertimento e competizione assicurati per tutti.",
-    prize: "Trofeo + Premi",
-  },
-  {
-    id: "4fogliano",
-    title: "4Fogliano",
-    icon: Dribbble as LucideIcon,
-    date: "18 - 22 Giugno",
-    time: "19:00",
-    description:
-      "Il torneo di basket 4 contro 4 targato Fogliano. Sfide rapide e spettacolari!",
-    prize: "Trofeo + Premi",
-  },
-  {
-    id: "lodolata",
-    title: "Lodolata",
-    icon: Footprints as LucideIcon,
-    date: "18 - 22 Giugno",
-    time: "19:00",
-    description:
-      "La corsa di Fogliano! Un percorso attraverso le strade e le campagne del paese.",
-    prize: "Medaglie e Premi",
-  },
-]
+interface SportEventData {
+  id: string
+  title: string
+  icon: string
+  date: string
+  time: string
+  description: string
+  prize: string
+}
+
+const iconMap: Record<string, LucideIcon> = {
+  Footprints,
+  Volleyball,
+  Dribbble,
+  PersonStanding,
+  Trophy,
+}
+
+interface SportEvent {
+  id: string
+  title: string
+  icon: LucideIcon
+  date: string
+  time: string
+  description: string
+  prize: string
+}
+
+const sportEvents: SportEvent[] = (sportEventsData as SportEventData[]).map((sport) => ({
+  ...sport,
+  icon: (iconMap[sport.icon] || Trophy) as LucideIcon,
+}))
 
 export function SportsSection() {
   return (

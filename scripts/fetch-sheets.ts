@@ -22,6 +22,7 @@ const SHEET_SAGRA_EVENTI = "SagraEventi";
 const SHEET_MENU = "Menu";
 const SHEET_SPORT = "Sport";
 const SHEET_SPORT_DETTAGLI = "SportDettagli";
+const SHEET_STORIA = "Storia";
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -47,6 +48,18 @@ async function getSheetRows(
         });
         return obj;
     });
+}
+
+/** Fetch optional sheet - returns [] if sheet doesn't exist or fails */
+async function getSheetRowsSafe(
+    sheets: ReturnType<typeof google.sheets>,
+    sheetName: string
+): Promise<Record<string, string>[]> {
+    try {
+        return await getSheetRows(sheets, sheetName);
+    } catch {
+        return [];
+    }
 }
 
 function toBool(value: string | undefined): boolean {
@@ -158,13 +171,14 @@ async function main() {
     const sheets = google.sheets({ version: "v4", auth });
 
     // Fetch all sheets in parallel
-    const [sagraRows, eventiRows, menuRows, sportRows, dettagliRows] =
+    const [sagraRows, eventiRows, menuRows, sportRows, dettagliRows, storiaRows] =
         await Promise.all([
             getSheetRows(sheets, SHEET_SAGRA),
             getSheetRows(sheets, SHEET_SAGRA_EVENTI),
             getSheetRows(sheets, SHEET_MENU),
             getSheetRows(sheets, SHEET_SPORT),
             getSheetRows(sheets, SHEET_SPORT_DETTAGLI),
+            getSheetRowsSafe(sheets, SHEET_STORIA),
         ]);
 
     console.log(
@@ -173,16 +187,45 @@ async function main() {
     console.log(
         `  ✅ Sport: ${sportRows.length} sport, ${dettagliRows.length} dettagli`
     );
+    if (storiaRows.length > 0) {
+        console.log(`  ✅ Storia: ${storiaRows.length} riga/e`);
+    }
 
     // Build JSON
     const sagraCards = buildSagraCards(sagraRows, eventiRows, menuRows);
     const sportsCards = buildSportsCards(sportRows, dettagliRows);
 
-    // Write to data/
     const dataDir = path.join(process.cwd(), "data");
     if (!fs.existsSync(dataDir)) {
         fs.mkdirSync(dataDir, { recursive: true });
     }
+
+    // Build storia.json from first row (columns: titolo, contenuto)
+    const storiaPath = path.join(dataDir, "storia.json");
+    const defaultStoria = {
+        titolo: "La nostra storia",
+        contenuto:
+            "La Sagra di Fogliano nasce dalla passione e dalla tradizione della nostra comunità.",
+        fotoVolontari: "/images/volontari.jpg",
+    };
+    let storiaData = defaultStoria;
+    if (storiaRows.length > 0) {
+        const first = storiaRows[0];
+        const titolo = (first.titolo ?? first.Titolo ?? "").trim();
+        const contenuto = (first.contenuto ?? first.Contenuto ?? "").trim();
+        const fotoVolontari = (first.fotoVolontari ?? first.foto ?? "").trim();
+        if (titolo || contenuto || fotoVolontari) {
+            storiaData = {
+                titolo: titolo || defaultStoria.titolo,
+                contenuto: contenuto || defaultStoria.contenuto,
+                fotoVolontari: fotoVolontari || defaultStoria.fotoVolontari,
+            };
+        }
+    }
+
+    // Write to data/
+    fs.writeFileSync(storiaPath, JSON.stringify(storiaData, null, 4), "utf-8");
+    console.log("📁 Written data/storia.json");
 
     fs.writeFileSync(
         path.join(dataDir, "sagra-cards.json"),
@@ -195,8 +238,7 @@ async function main() {
         "utf-8"
     );
 
-    console.log("📁 Written data/sagra-cards.json");
-    console.log("📁 Written data/sports-cards.json");
+    console.log("📁 Written sagra-cards.json, sports-cards.json");
     console.log("✨ Done!");
 }
 

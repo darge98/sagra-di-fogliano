@@ -50,11 +50,11 @@ export function Hero() {
         </div>
 
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 flex-wrap">
-          <Button asChild size="lg" className="bg-sagra text-sagra-foreground hover:bg-sagra hover:text-sagra-foreground  px-8 text-base font-bold">
-            <a href="#eventi">Scopri gli Eventi</a>
+          <Button asChild size="lg" className="w-48 bg-sagra text-sagra-foreground hover:bg-sagra hover:text-sagra-foreground text-base font-bold">
+            <a href="#eventi">Sagra</a>
           </Button>
-          <Button asChild size="lg" className="bg-sport text-sport-foreground hover:bg-sport hover:text-sport-foregroundpx-8 text-base font-bold">
-            <a href="#iscrizione">Iscriviti allo Sport</a>
+          <Button asChild size="lg" className="w-48 bg-sport text-sport-foreground hover:bg-sport hover:text-sport-foreground text-base font-bold">
+            <a href="#sport">GdS</a>
           </Button>
         </div>
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 flex-wrap">

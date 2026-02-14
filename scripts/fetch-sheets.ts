@@ -135,10 +135,17 @@ function buildSportsCards(
     return sportRows.map((sport) => {
         const details = dettagliRows
             .filter((d) => d.sportId === sport.id)
-            .map((d) => ({
-                label: d.label,
-                value: d.value,
-            }));
+            .map((d) => {
+                const icon = (d.icon ?? d.Icon ?? "").trim();
+                const highlighted = toBool(d.highlighted ?? d.Highlighted ?? "true");
+                const item: { label: string; value: string; icon?: string; highlighted?: boolean } = {
+                    label: d.label,
+                    value: d.value,
+                    highlighted,
+                };
+                if (icon) item.icon = icon;
+                return item;
+            });
 
         return {
             id: sport.id,

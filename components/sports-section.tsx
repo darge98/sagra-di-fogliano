@@ -10,13 +10,28 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog"
-import { CalendarDays, Clock, Trophy, Footprints, Dribbble, PersonStanding, Volleyball, FileText } from "lucide-react"
+import {
+  CalendarDays,
+  Clock,
+  Trophy,
+  Footprints,
+  Dribbble,
+  PersonStanding,
+  Volleyball,
+  FileText,
+  Banknote,
+  Calendar,
+  Info,
+  ListChecks,
+} from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import sportEventsData from "@/data/sports-cards.json"
 
 interface SportDetailData {
   label: string
   value: string
+  icon?: string
+  highlighted?: boolean
 }
 
 interface SportEventData {
@@ -36,6 +51,13 @@ const iconMap: Record<string, LucideIcon> = {
   Dribbble,
   PersonStanding,
   Trophy,
+  FileText,
+  CalendarDays,
+  Calendar,
+  Clock,
+  Banknote,
+  Info,
+  ListChecks,
 }
 
 interface SportEvent {
@@ -183,13 +205,22 @@ export function SportsSection() {
             {/* Details list */}
             <div className="mt-4 space-y-0">
               {selectedSport.details?.map((detail, index) => {
-                const isLast = index === (selectedSport.details?.length ?? 0) - 1
+                const isLast = index === (selectedSport.details ?? []).length - 1
+                const DetailIcon =
+                  (detail.icon && iconMap[detail.icon]) || FileText
+                const isHighlighted = detail.highlighted !== false
                 return (
                   <div key={detail.label} className="flex gap-4">
                     {/* Timeline dot */}
                     <div className="flex flex-col items-center">
-                      <div className="flex items-center justify-center h-10 w-10 rounded-full shrink-0 bg-sport text-sport-foreground">
-                        <FileText className="h-4 w-4" />
+                      <div
+                        className={`flex items-center justify-center h-10 w-10 rounded-full shrink-0 ${
+                          isHighlighted
+                            ? "bg-sport text-sport-foreground"
+                            : "bg-muted text-muted-foreground"
+                        }`}
+                      >
+                        <DetailIcon className="h-4 w-4" />
                       </div>
                     </div>
                     {/* Content */}

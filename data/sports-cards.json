@@ -10,23 +10,33 @@
         "details": [
             {
                 "label": "Regolamento",
-                "value": "8 giocatori per squadra + 4 riserve. Partite da 2 tempi da 20 minuti."
+                "value": "8 giocatori per squadra + 4 riserve. Partite da 2 tempi da 20 minuti.",
+                "highlighted": true,
+                "icon": "FileText"
             },
             {
                 "label": "Gironi",
-                "value": "18 - 19 Giugno"
+                "value": "18 - 19 Giugno",
+                "highlighted": false,
+                "icon": "CalendarDays"
             },
             {
                 "label": "Semifinali",
-                "value": "20 giugno"
+                "value": "20 giugno",
+                "highlighted": false,
+                "icon": "Clock"
             },
             {
                 "label": "Finale",
-                "value": "22 giugno"
+                "value": "22 giugno",
+                "highlighted": true,
+                "icon": "Trophy"
             },
             {
                 "label": "Costo iscrizione",
-                "value": "€50 a squadra"
+                "value": "€50 a squadra",
+                "highlighted": false,
+                "icon": "Banknote"
             }
         ]
     },
@@ -41,23 +51,33 @@
         "details": [
             {
                 "label": "Regolamento",
-                "value": "Squadre da 4 giocatori. Set da 21 punti."
+                "value": "Squadre da 4 giocatori. Set da 21 punti.",
+                "highlighted": true,
+                "icon": "FileText"
             },
             {
                 "label": "Gironi",
-                "value": "18 - 19 Giugno"
+                "value": "18 - 19 Giugno",
+                "highlighted": false,
+                "icon": "CalendarDays"
             },
             {
                 "label": "Semifinali",
-                "value": "20 giugno"
+                "value": "20 giugno",
+                "highlighted": false,
+                "icon": "Clock"
             },
             {
                 "label": "Finale",
-                "value": "22 giugno"
+                "value": "22 giugno",
+                "highlighted": true,
+                "icon": "Trophy"
             },
             {
                 "label": "Costo iscrizione",
-                "value": "€30 a squadra"
+                "value": "€30 a squadra",
+                "highlighted": false,
+                "icon": "Banknote"
             }
         ]
     },
@@ -72,23 +92,33 @@
         "details": [
             {
                 "label": "Regolamento",
-                "value": "4 giocatori per squadra + 2 riserve. Partite da 2 tempi da 10 minuti."
+                "value": "4 giocatori per squadra + 2 riserve. Partite da 2 tempi da 10 minuti.",
+                "highlighted": true,
+                "icon": "FileText"
             },
             {
                 "label": "Gironi",
-                "value": "18 - 19 Giugno"
+                "value": "18 - 19 Giugno",
+                "highlighted": false,
+                "icon": "CalendarDays"
             },
             {
                 "label": "Semifinali",
-                "value": "20 giugno"
+                "value": "20 giugno",
+                "highlighted": false,
+                "icon": "Clock"
             },
             {
                 "label": "Finale",
-                "value": "22 giugno"
+                "value": "22 giugno",
+                "highlighted": true,
+                "icon": "Trophy"
             },
             {
                 "label": "Costo iscrizione",
-                "value": "€30 a squadra"
+                "value": "€30 a squadra",
+                "highlighted": false,
+                "icon": "Banknote"
             }
         ]
     },
@@ -103,15 +133,21 @@
         "details": [
             {
                 "label": "Regolamento",
-                "value": "Corsa non competitiva aperta a tutti. Percorso di 5 km."
+                "value": "Corsa non competitiva aperta a tutti. Percorso di 5 km.",
+                "highlighted": true,
+                "icon": "FileText"
             },
             {
                 "label": "Data gara",
-                "value": "21 giugno"
+                "value": "21 giugno",
+                "highlighted": true,
+                "icon": "Trophy"
             },
             {
                 "label": "Costo iscrizione",
-                "value": "€10 a persona"
+                "value": "€10 a persona",
+                "highlighted": false,
+                "icon": "Banknote"
             }
         ]
     }

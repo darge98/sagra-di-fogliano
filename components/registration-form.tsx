@@ -2,6 +2,7 @@
 
 import React from "react"
 import imageCompression from "browser-image-compression"
+import { compress } from "@quicktoolsone/pdf-compress"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -15,6 +16,9 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { CheckCircle2, Loader2, Send, Plus, Trash2, Users } from "lucide-react"
+
+const MAX_CERTIFICATE_MB = 20
+const MAX_CERTIFICATE_BYTES = MAX_CERTIFICATE_MB * 1024 * 1024
 
 const sportOptions = [
   {
@@ -338,21 +342,40 @@ export function RegistrationForm() {
         )
       )
       const compressedFiles = await Promise.all(
-        members.map(async (m, i) => {
+        members.map(async (m) => {
           const file = m.medicalCertificate
           if (!file) return null
-          const isImage = file.type.startsWith("image/")
-          if (!isImage) return file
-          try {
-            const compressed = await imageCompression(file, {
-              maxSizeMB: 0.4,
-              maxWidthOrHeight: 1600,
-              useWebWorker: true,
-            })
-            return new File([compressed], file.name, { type: compressed.type })
-          } catch {
-            return file
+          if (file.size > MAX_CERTIFICATE_BYTES) {
+            throw new Error(
+              `Il file "${file.name}" è troppo grande (${(file.size / 1024 / 1024).toFixed(1)} MB). I certificati devono essere sotto i ${MAX_CERTIFICATE_MB} MB. Riduci le dimensioni o scatta una foto.`
+            )
           }
+          const isImage = file.type.startsWith("image/")
+          const isPdf = file.type === "application/pdf"
+          if (isImage) {
+            try {
+              const compressed = await imageCompression(file, {
+                maxSizeMB: 0.4,
+                maxWidthOrHeight: 1600,
+                useWebWorker: true,
+              })
+              return new File([compressed], file.name, { type: compressed.type })
+            } catch {
+              return file
+            }
+          }
+          if (isPdf) {
+            try {
+              const buffer = await file.arrayBuffer()
+              const result = await compress(buffer, { preset: "balanced" })
+              return new File([result.pdf], file.name, {
+                type: "application/pdf",
+              })
+            } catch {
+              return file
+            }
+          }
+          return file
         })
       )
       compressedFiles.forEach((file, i) => {

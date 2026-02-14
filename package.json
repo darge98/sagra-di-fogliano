@@ -5,13 +5,15 @@
   "scripts": {
     "dev": "next dev --turbo",
     "fetch-data": "npx tsx scripts/fetch-sheets.ts",
-    "prebuild": "npx tsx scripts/fetch-sheets.ts",
+    "postinstall": "node scripts/copy-pdf-worker.js",
+    "prebuild": "npx tsx scripts/fetch-sheets.ts && node scripts/copy-pdf-worker.js",
     "build": "pnpm run prebuild && next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
+    "@quicktoolsone/pdf-compress": "^2.0.0",
     "@radix-ui/react-accordion": "1.2.2",
     "@radix-ui/react-alert-dialog": "1.1.4",
     "@radix-ui/react-aspect-ratio": "1.1.1",

@@ -119,7 +119,7 @@ export function EventsSection() {
                 {/* Day header */}
                 <div className="bg-sagra px-6 py-8 text-center">
                   <p className="text-sagra-foreground/70 text-xs uppercase tracking-widest font-bold">
-                    Giugno 2025
+                    {day.date}
                   </p>
                   <p className="font-serif text-5xl md:text-6xl font-bold text-sagra-foreground mt-1">
                     {day.dayNumber}

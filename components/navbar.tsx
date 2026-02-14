@@ -9,6 +9,7 @@ const navLinks = [
   { label: "Eventi", href: "#eventi" },
   { label: "Sport", href: "#sport" },
   { label: "Iscrizione", href: "#iscrizione" },
+  { label: "Sponsor", href: "#sponsor" },
   { label: "Contatti", href: "#contatti" },
 ]
 

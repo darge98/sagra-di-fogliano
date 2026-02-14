@@ -1,0 +1,38 @@
+[
+  {
+    "id": "sponsor-1",
+    "name": "Sponsor",
+    "logo": "/placeholder-logo.png",
+    "url": "#"
+  },
+  {
+    "id": "sponsor-2",
+    "name": "Sponsor",
+    "logo": "/placeholder-logo.png",
+    "url": "#"
+  },
+  {
+    "id": "sponsor-3",
+    "name": "Sponsor",
+    "logo": "/placeholder-logo.png",
+    "url": "#"
+  },
+  {
+    "id": "sponsor-4",
+    "name": "Sponsor",
+    "logo": "/placeholder-logo.png",
+    "url": "#"
+  },
+  {
+    "id": "sponsor-5",
+    "name": "Sponsor",
+    "logo": "/placeholder-logo.png",
+    "url": "#"
+  },
+  {
+    "id": "sponsor-6",
+    "name": "Sponsor",
+    "logo": "/placeholder-logo.png",
+    "url": "#"
+  }
+]

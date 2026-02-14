@@ -30,6 +30,9 @@ export function Footer() {
               <a href="#iscrizione" className="block text-sm text-primary-foreground/70 hover:text-primary-foreground transition-colors">
                 Iscrizione
               </a>
+              <a href="#sponsor" className="block text-sm text-primary-foreground/70 hover:text-primary-foreground transition-colors">
+                Sponsor
+              </a>
             </nav>
           </div>
 

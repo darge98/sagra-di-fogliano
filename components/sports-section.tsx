@@ -1,8 +1,23 @@
+"use client"
+
+import { useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { CalendarDays, Clock, Trophy, Footprints, Dribbble, PersonStanding, Volleyball } from "lucide-react"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog"
+import { CalendarDays, Clock, Trophy, Footprints, Dribbble, PersonStanding, Volleyball, FileText } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import sportEventsData from "@/data/sports-cards.json"
+
+interface SportDetailData {
+  label: string
+  value: string
+}
 
 interface SportEventData {
   id: string
@@ -12,6 +27,7 @@ interface SportEventData {
   time: string
   description: string
   prize: string
+  details?: SportDetailData[]
 }
 
 const iconMap: Record<string, LucideIcon> = {
@@ -30,6 +46,7 @@ interface SportEvent {
   time: string
   description: string
   prize: string
+  details?: SportDetailData[]
 }
 
 const sportEvents: SportEvent[] = (sportEventsData as SportEventData[]).map((sport) => ({
@@ -38,6 +55,8 @@ const sportEvents: SportEvent[] = (sportEventsData as SportEventData[]).map((spo
 }))
 
 export function SportsSection() {
+  const [selectedSport, setSelectedSport] = useState<SportEvent | null>(null)
+
   return (
     <section id="sport" className="py-24 px-6 bg-muted">
       <div className="mx-auto max-w-7xl">
@@ -107,12 +126,24 @@ export function SportsSection() {
                         {sport.prize}
                       </span>
                     </div>
-                    <Button
-                      asChild
-                      className="w-full bg-sport text-sport-foreground hover:bg-sport/90 font-bold"
-                    >
-                      <a href="#iscrizione">Iscriviti Ora</a>
-                    </Button>
+                    <div className="flex flex-col gap-2">
+                      {sport.details && sport.details.length > 0 && (
+                        <Button
+                          variant="outline"
+                          className="w-full border-sport text-sport hover:bg-sport/10 font-bold"
+                          onClick={() => setSelectedSport(sport)}
+                        >
+                          <FileText className="h-4 w-4 mr-2" />
+                          Scopri di più
+                        </Button>
+                      )}
+                      <Button
+                        asChild
+                        className="w-full bg-sport text-sport-foreground hover:bg-sport/90 font-bold"
+                      >
+                        <a href="#iscrizione">Iscriviti Ora</a>
+                      </Button>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -120,6 +151,73 @@ export function SportsSection() {
           })}
         </div>
       </div>
+
+      {/* Sport detail dialog */}
+      <Dialog
+        open={selectedSport !== null}
+        onOpenChange={(open) => {
+          if (!open) setSelectedSport(null)
+        }}
+      >
+        {selectedSport && (
+          <DialogContent className="sm:max-w-xl max-h-[85vh] overflow-y-auto !bg-white text-foreground">
+            <DialogHeader>
+              <div className="flex items-center gap-4 mb-2">
+                <div className="flex flex-col items-center justify-center bg-sport rounded-lg px-4 py-3 shrink-0">
+                  {(() => {
+                    const Icon = selectedSport.icon
+                    return <Icon className="h-8 w-8 text-sport-foreground" />
+                  })()}
+                </div>
+                <div>
+                  <DialogTitle className="font-serif text-2xl font-bold text-foreground">
+                    {selectedSport.title}
+                  </DialogTitle>
+                  <DialogDescription className="text-muted-foreground mt-1">
+                    {selectedSport.description}
+                  </DialogDescription>
+                </div>
+              </div>
+            </DialogHeader>
+
+            {/* Details list */}
+            <div className="mt-4 space-y-0">
+              {selectedSport.details?.map((detail, index) => {
+                const isLast = index === (selectedSport.details?.length ?? 0) - 1
+                return (
+                  <div key={detail.label} className="flex gap-4">
+                    {/* Timeline dot */}
+                    <div className="flex flex-col items-center">
+                      <div className="flex items-center justify-center h-10 w-10 rounded-full shrink-0 bg-sport text-sport-foreground">
+                        <FileText className="h-4 w-4" />
+                      </div>
+                    </div>
+                    {/* Content */}
+                    <div className={`pb-6 ${isLast ? "pb-0" : ""}`}>
+                      <h4 className="font-semibold text-foreground text-sm">
+                        {detail.label}
+                      </h4>
+                      <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
+                        {detail.value}
+                      </p>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+
+            {/* CTA footer */}
+            <div className="mt-4 pt-4 border-t border-border">
+              <Button
+                asChild
+                className="w-full bg-sport text-sport-foreground hover:bg-sport/90 font-bold"
+              >
+                <a href="#iscrizione">Iscriviti Ora</a>
+              </Button>
+            </div>
+          </DialogContent>
+        )}
+      </Dialog>
     </section>
   )
 }

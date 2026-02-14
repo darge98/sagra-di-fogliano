@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-
+import imageCompression from "browser-image-compression"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -337,10 +337,26 @@ export function RegistrationForm() {
           }))
         )
       )
-      members.forEach((m, i) => {
-        if (m.medicalCertificate) {
-          formData.set(`certificate_${i}`, m.medicalCertificate)
-        }
+      const compressedFiles = await Promise.all(
+        members.map(async (m, i) => {
+          const file = m.medicalCertificate
+          if (!file) return null
+          const isImage = file.type.startsWith("image/")
+          if (!isImage) return file
+          try {
+            const compressed = await imageCompression(file, {
+              maxSizeMB: 0.4,
+              maxWidthOrHeight: 1600,
+              useWebWorker: true,
+            })
+            return new File([compressed], file.name, { type: compressed.type })
+          } catch {
+            return file
+          }
+        })
+      )
+      compressedFiles.forEach((file, i) => {
+        if (file) formData.set(`certificate_${i}`, file)
       })
       const res = await fetch("/api/register", {
         method: "POST",

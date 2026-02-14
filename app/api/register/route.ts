@@ -43,9 +43,7 @@ export async function POST(request: Request) {
 
     const { spreadsheetId, certificatiFolderId } = getSportDriveConfig(sport);
 
-    const members: MemberRow[] = [];
-    for (let i = 0; i < membersData.length; i++) {
-      const m = membersData[i];
+    const uploadPromises = membersData.map(async (m, i) => {
       const certFile = formData.get(`certificate_${i}`) as File | null;
       let certificateFileName = "";
 
@@ -62,7 +60,7 @@ export async function POST(request: Request) {
         );
       }
 
-      members.push({
+      return {
         firstName: m.firstName,
         lastName: m.lastName,
         gender: m.gender,
@@ -70,8 +68,10 @@ export async function POST(request: Request) {
         birthPlace: m.birthPlace,
         address: m.address,
         certificateFileName,
-      });
-    }
+      } satisfies MemberRow;
+    });
+
+    const members = await Promise.all(uploadPromises);
 
     await ensureSheetHeaders(spreadsheetId);
 

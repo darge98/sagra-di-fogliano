@@ -21,9 +21,26 @@ import {
   Theater,
   Camera,
   Beer,
+  ChevronDown,
+  Leaf,
+  WheatOff,
+  Flame,
 } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import festivalDaysData from "@/data/sagra-cards.json"
+
+interface MenuItemData {
+  name: string
+  price: string
+  vegan?: boolean
+  glutenFree?: boolean
+  spicy?: boolean
+}
+
+interface MenuCategoryData {
+  category: string
+  items: MenuItemData[]
+}
 
 interface DayEventData {
   time: string
@@ -41,6 +58,7 @@ interface FestivalDayData {
   date: string
   tagline: string
   events: DayEventData[]
+  menu?: MenuCategoryData[]
 }
 
 const iconMap: Record<string, LucideIcon> = {
@@ -70,6 +88,7 @@ interface FestivalDay {
   date: string
   tagline: string
   events: DayEvent[]
+  menu?: MenuCategoryData[]
 }
 
 const festivalDays: FestivalDay[] = (festivalDaysData as FestivalDayData[]).map((day) => ({
@@ -82,6 +101,7 @@ const festivalDays: FestivalDay[] = (festivalDaysData as FestivalDayData[]).map(
 
 export function EventsSection() {
   const [selectedDay, setSelectedDay] = useState<FestivalDay | null>(null)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   return (
     <section id="eventi" className="py-24 px-6">
@@ -253,8 +273,81 @@ export function EventsSection() {
               })}
             </div>
 
+            {/* Menu section - collapsible */}
+            {selectedDay.menu && selectedDay.menu.length > 0 && (
+              <div className="mt-6 pt-5 border-t border-border">
+                <button
+                  type="button"
+                  className="flex items-center justify-between w-full group/menu"
+                  onClick={() => setMenuOpen((prev) => !prev)}
+                  aria-expanded={menuOpen}
+                >
+                  <div className="flex items-center gap-2">
+                    <UtensilsCrossed className="h-5 w-5 text-sagra" />
+                    <h3 className="font-serif text-xl font-bold text-foreground">
+                      Menù della Serata
+                    </h3>
+                  </div>
+                  <ChevronDown
+                    className={`h-5 w-5 text-muted-foreground transition-transform duration-300 ${menuOpen ? "rotate-180" : ""
+                      }`}
+                  />
+                </button>
+                <div
+                  className={`overflow-hidden transition-all duration-300 ease-in-out ${menuOpen ? "max-h-[1000px] opacity-100 mt-4" : "max-h-0 opacity-0"
+                    }`}
+                >
+                  {/* Legenda */}
+                  <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground mb-4 pb-3 border-b border-border">
+                    <span className="flex items-center gap-1">
+                      <Leaf className="h-3.5 w-3.5 text-green-600" /> Vegano
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <WheatOff className="h-3.5 w-3.5 text-amber-600" /> Senza glutine
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Flame className="h-3.5 w-3.5 text-red-500" /> Piccante
+                    </span>
+                  </div>
+                  <div className="space-y-4">
+                    {selectedDay.menu.map((category) => (
+                      <div key={category.category}>
+                        <h4 className="text-xs font-bold uppercase tracking-wider text-sagra-foreground bg-sagra px-3 py-1.5 rounded-md mb-2">
+                          {category.category}
+                        </h4>
+                        <ul className="space-y-1">
+                          {category.items.map((item) => (
+                            <li
+                              key={item.name}
+                              className="flex items-center justify-between text-sm py-1 px-1"
+                            >
+                              <span className="flex items-center gap-1.5 text-foreground">
+                                {item.name}
+                                {item.vegan && (
+                                  <span title="Vegano"><Leaf className="h-3.5 w-3.5 text-green-600 shrink-0" /></span>
+                                )}
+                                {item.glutenFree && (
+                                  <span title="Senza glutine"><WheatOff className="h-3.5 w-3.5 text-amber-600 shrink-0" /></span>
+                                )}
+                                {item.spicy && (
+                                  <span title="Piccante"><Flame className="h-3.5 w-3.5 text-red-500 shrink-0" /></span>
+                                )}
+                              </span>
+                              <span className="font-bold text-foreground ml-4 shrink-0">
+                                {item.price}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Location footer */}
-            <div className="mt-4 pt-4 border-t border-border flex items-center gap-2 text-sm text-muted-foreground">
+            <div className="pt-4 border-t border-border flex items-center gap-2 text-sm text-muted-foreground">
               <MapPin className="h-4 w-4" />
               <span>
                 Centro Sociale di Fogliano, Via Nervi 23 - Reggio Emilia

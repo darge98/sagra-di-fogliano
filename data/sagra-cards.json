@@ -4,12 +4,12 @@
         "dayShort": "SAB",
         "dayNumber": "13",
         "dayName": "Sabato",
-        "date": "13 Giugno 2026",
+        "date": "Giugno 2026",
         "tagline": "Musica Live, Bancarelle e Gonfiabili",
         "events": [
             {
                 "time": "15:30",
-                "title": "Attività per bambini e ragazzi",
+                "title": "asd",
                 "description": "Al parco del Centro Sociale, via Nervi 23. Bancarelle e gonfiabili per bambini.",
                 "icon": "Baby"
             },
@@ -25,6 +25,84 @@
                 "description": "THEM DUO e JEFF & THE BRODMANNS sul palco principale.",
                 "icon": "Music",
                 "highlight": true
+            }
+        ],
+        "menu": [
+            {
+                "category": "Primi",
+                "items": [
+                    {
+                        "name": "Tortellini in brodo",
+                        "price": "€7",
+                        "vegan": true,
+                        "glutenFree": true,
+                        "spicy": true
+                    },
+                    {
+                        "name": "Tortelloni burro e salvia",
+                        "price": "€7",
+                        "glutenFree": false
+                    },
+                    {
+                        "name": "Gramigna al ragù",
+                        "price": "€7"
+                    }
+                ]
+            },
+            {
+                "category": "Secondi e Contorni",
+                "items": [
+                    {
+                        "name": "Costine alla griglia",
+                        "price": "€8"
+                    },
+                    {
+                        "name": "Salsiccia alla griglia",
+                        "price": "€6"
+                    },
+                    {
+                        "name": "Patatine fritte",
+                        "price": "€4"
+                    },
+                    {
+                        "name": "Insalata mista",
+                        "price": "€4"
+                    }
+                ]
+            },
+            {
+                "category": "Crescentine e Gnocco",
+                "items": [
+                    {
+                        "name": "Gnocco fritto",
+                        "price": "€5"
+                    },
+                    {
+                        "name": "Tigelle con salumi",
+                        "price": "€6"
+                    }
+                ]
+            },
+            {
+                "category": "Bevande",
+                "items": [
+                    {
+                        "name": "Acqua",
+                        "price": "€1"
+                    },
+                    {
+                        "name": "Bibite",
+                        "price": "€2.50"
+                    },
+                    {
+                        "name": "Birra alla spina",
+                        "price": "€4"
+                    },
+                    {
+                        "name": "Vino (calice)",
+                        "price": "€3"
+                    }
+                ]
             }
         ]
     },
@@ -64,6 +142,80 @@
                 "icon": "Music",
                 "highlight": true
             }
+        ],
+        "menu": [
+            {
+                "category": "Primi",
+                "items": [
+                    {
+                        "name": "Tortellini in brodo",
+                        "price": "€7"
+                    },
+                    {
+                        "name": "Tortelloni burro e salvia",
+                        "price": "€7"
+                    },
+                    {
+                        "name": "Gramigna al ragù",
+                        "price": "€7"
+                    }
+                ]
+            },
+            {
+                "category": "Secondi e Contorni",
+                "items": [
+                    {
+                        "name": "Costine alla griglia",
+                        "price": "€8"
+                    },
+                    {
+                        "name": "Salsiccia alla griglia",
+                        "price": "€6"
+                    },
+                    {
+                        "name": "Patatine fritte",
+                        "price": "€4"
+                    },
+                    {
+                        "name": "Insalata mista",
+                        "price": "€4"
+                    }
+                ]
+            },
+            {
+                "category": "Crescentine e Gnocco",
+                "items": [
+                    {
+                        "name": "Gnocco fritto",
+                        "price": "€5"
+                    },
+                    {
+                        "name": "Tigelle con salumi",
+                        "price": "€6"
+                    }
+                ]
+            },
+            {
+                "category": "Bevande",
+                "items": [
+                    {
+                        "name": "Acqua",
+                        "price": "€1"
+                    },
+                    {
+                        "name": "Bibite",
+                        "price": "€2.50"
+                    },
+                    {
+                        "name": "Birra alla spina",
+                        "price": "€4"
+                    },
+                    {
+                        "name": "Vino (calice)",
+                        "price": "€3"
+                    }
+                ]
+            }
         ]
     },
     {
@@ -91,6 +243,80 @@
                 "title": "CABARET DIALETTALE",
                 "icon": "Theater",
                 "highlight": true
+            }
+        ],
+        "menu": [
+            {
+                "category": "Primi",
+                "items": [
+                    {
+                        "name": "Tortellini in brodo",
+                        "price": "€7"
+                    },
+                    {
+                        "name": "Tortelloni burro e salvia",
+                        "price": "€7"
+                    },
+                    {
+                        "name": "Gramigna al ragù",
+                        "price": "€7"
+                    }
+                ]
+            },
+            {
+                "category": "Secondi e Contorni",
+                "items": [
+                    {
+                        "name": "Costine alla griglia",
+                        "price": "€8"
+                    },
+                    {
+                        "name": "Salsiccia alla griglia",
+                        "price": "€6"
+                    },
+                    {
+                        "name": "Patatine fritte",
+                        "price": "€4"
+                    },
+                    {
+                        "name": "Insalata mista",
+                        "price": "€4"
+                    }
+                ]
+            },
+            {
+                "category": "Crescentine e Gnocco",
+                "items": [
+                    {
+                        "name": "Gnocco fritto",
+                        "price": "€5"
+                    },
+                    {
+                        "name": "Tigelle con salumi",
+                        "price": "€6"
+                    }
+                ]
+            },
+            {
+                "category": "Bevande",
+                "items": [
+                    {
+                        "name": "Acqua",
+                        "price": "€1"
+                    },
+                    {
+                        "name": "Bibite",
+                        "price": "€2.50"
+                    },
+                    {
+                        "name": "Birra alla spina",
+                        "price": "€4"
+                    },
+                    {
+                        "name": "Vino (calice)",
+                        "price": "€3"
+                    }
+                ]
             }
         ]
     }

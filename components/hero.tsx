@@ -16,13 +16,15 @@ export function Hero() {
   const [storiaOpen, setStoriaOpen] = useState(false)
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background image */}
+      {/* Background image (solo se presente in images.json) */}
       <div className="absolute inset-0">
-        <img
-          src={immaginiData.home ?? "/images/home.jpeg"}
-          alt="Festa della Sagra di Fogliano con tavoli imbanditi e luci festose"
-          className="w-full h-full object-cover"
-        />
+        {immaginiData.home && (
+          <img
+            src={immaginiData.home}
+            alt="Festa della Sagra di Fogliano con tavoli imbanditi e luci festose"
+            className="w-full h-full object-cover"
+          />
+        )}
         <div className="absolute inset-0 bg-foreground/60" />
       </div>
 
@@ -58,41 +60,45 @@ export function Hero() {
             <a href="#sport">GdS</a>
           </Button>
         </div>
-        <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 flex-wrap">
-          <Button
-            size="lg"
-            variant="outline"
-            className="border-primary-foreground/60 text-primary-foreground bg-primary-foreground/10 hover:bg-primary-foreground/10 hover:text-primary-foreground px-8 text-base font-bold"
-            onClick={() => setStoriaOpen(true)}
-          >
-            <BookOpen className="h-5 w-5 mr-2" />
-            La nostra storia
-          </Button>
-        </div>
+        {(storiaData.titolo || storiaData.contenuto) && (
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 flex-wrap">
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-primary-foreground/60 text-primary-foreground bg-primary-foreground/10 hover:bg-primary-foreground/10 hover:text-primary-foreground px-8 text-base font-bold"
+              onClick={() => setStoriaOpen(true)}
+            >
+              <BookOpen className="h-5 w-5 mr-2" />
+              La nostra storia
+            </Button>
+          </div>
+        )}
 
         <Dialog open={storiaOpen} onOpenChange={setStoriaOpen}>
           <DialogContent className="sm:max-w-3xl max-h-[90vh] overflow-hidden flex flex-col p-0 gap-0 sm:rounded-xl border">
             {/* Header con accent */}
-            <div className="bg-sagra/15 border-b border-sagra/30 px-6 py-5">
-              <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-sagra text-sagra-foreground">
-                  <BookOpen className="h-6 w-6" />
+            {(storiaData.titolo || storiaData.contenuto) && (
+              <div className="bg-sagra/15 border-b border-sagra/30 px-6 py-5">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-sagra text-sagra-foreground">
+                    <BookOpen className="h-6 w-6" />
+                  </div>
+                  <DialogHeader className="flex-1">
+                    <DialogTitle className="font-serif text-2xl font-bold text-foreground">
+                      {storiaData.titolo}
+                    </DialogTitle>
+                  </DialogHeader>
                 </div>
-                <DialogHeader className="flex-1">
-                  <DialogTitle className="font-serif text-2xl font-bold text-foreground">
-                    {storiaData.titolo}
-                  </DialogTitle>
-                </DialogHeader>
               </div>
-            </div>
+            )}
 
             {/* Contenuto scrollabile */}
             <div className="overflow-y-auto flex-1">
-              {/* Foto volontari */}
-              {"fotoVolontari" in storiaData && storiaData.fotoVolontari && (
+              {/* Foto volontari (solo se presente in images.json) */}
+              {immaginiData.volontari && (
                 <div className="relative w-full aspect-[21/9] min-h-[180px] bg-muted overflow-hidden">
                   <img
-                    src={storiaData.fotoVolontari}
+                    src={immaginiData.volontari}
                     alt="I volontari della Sagra di Fogliano"
                     className="absolute inset-0 w-full h-full object-cover"
                     onError={(e) => {
@@ -114,14 +120,16 @@ export function Hero() {
                 </div>
               )}
 
-              {/* Testo */}
-              <div className="px-6 py-6">
-                <div className="relative pl-4 border-l-2 border-sagra/50">
-                  <p className="whitespace-pre-line text-foreground/90 leading-relaxed text-base">
-                    {storiaData.contenuto}
-                  </p>
+              {/* Testo (solo se presente) */}
+              {storiaData.contenuto && (
+                <div className="px-6 py-6">
+                  <div className="relative pl-4 border-l-2 border-sagra/50">
+                    <p className="whitespace-pre-line text-foreground/90 leading-relaxed text-base">
+                      {storiaData.contenuto}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </DialogContent>
         </Dialog>

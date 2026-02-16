@@ -93,14 +93,15 @@ export function SportsSection() {
           </p>
         </div>
 
-        {/* Sport image banner */}
-        <div className="relative rounded-2xl overflow-hidden mb-12 h-64 md:h-80">
-          <img
-            src={immaginiData.sports ?? "/images/sports.jpg"}
-            alt="Giornate dello Sportivo alla Sagra di Fogliano"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-sport-foreground/60 flex items-center justify-center">
+        {/* Sport image banner (solo se presente in images.json) */}
+        {immaginiData.sports && (
+          <div className="relative rounded-2xl overflow-hidden mb-12 h-64 md:h-80">
+            <img
+              src={immaginiData.sports}
+              alt="Giornate dello Sportivo alla Sagra di Fogliano"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-sport-foreground/60 flex items-center justify-center">
             <div className="text-center">
               <Trophy className="h-12 w-12 text-sport mx-auto mb-4" />
               <h3 className="font-serif text-3xl md:text-4xl font-bold text-sport">
@@ -112,6 +113,7 @@ export function SportsSection() {
             </div>
           </div>
         </div>
+        )}
 
         {/* Sport events grid - square cards */}
         <div className="mx-auto max-w-3xl grid grid-cols-1 sm:grid-cols-2 gap-6">

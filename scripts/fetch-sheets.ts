@@ -9,7 +9,6 @@ dotenv.config({ path: ".env" });
 // ---------------------------------------------------------------------------
 // Config
 // ---------------------------------------------------------------------------
-
 const SCOPES = [
     "https://www.googleapis.com/auth/spreadsheets.readonly",
     "https://www.googleapis.com/auth/drive.readonly",
@@ -56,14 +55,33 @@ async function getSheetRows(
     });
 }
 
+/** Restituisce il nome reale del foglio (come da API) cercando per nome case-insensitive */
+async function resolveSheetTitle(
+    sheets: ReturnType<typeof google.sheets>,
+    preferredName: string
+): Promise<string | null> {
+    const res = await sheets.spreadsheets.get({
+        spreadsheetId: SPREADSHEET_ID,
+        fields: "sheets.properties.title",
+    });
+    const titles = res.data.sheets?.map((s) => s.properties?.title).filter(Boolean) as string[];
+    const found = titles.find((t) => t.trim().toLowerCase() === preferredName.trim().toLowerCase());
+    return found ?? null;
+}
+
 /** Fetch optional sheet - returns [] if sheet doesn't exist or fails */
 async function getSheetRowsSafe(
     sheets: ReturnType<typeof google.sheets>,
     sheetName: string
 ): Promise<Record<string, string>[]> {
     try {
-        return await getSheetRows(sheets, sheetName);
-    } catch {
+        const resolved = await resolveSheetTitle(sheets, sheetName);
+        const name = resolved ?? sheetName;
+        return await getSheetRows(sheets, name);
+    } catch (err) {
+        if (sheetName === SHEET_STORIA) {
+            console.warn(`  ⚠️ Foglio "${sheetName}" non letto:`, err instanceof Error ? err.message : err);
+        }
         return [];
     }
 }
@@ -255,18 +273,15 @@ async function main() {
         console.log("  ℹ️ Foglio Immagini vuoto o assente (servono colonne: id, fileName)");
     }
 
-    // Download images from Drive (if folder ID is set)
+    // Download images from Drive (if folder ID is set). Solo le immagini scaricate con successo finiscono in imagesMap.
     const imagesDir = path.join(process.cwd(), "public", "images");
     const imagesMap: Record<string, string> = {};
-    const defaultImages: Record<string, string> = {
-        home: "/images/home.jpeg",
-        sports: "/images/sports.jpg",
-    };
+    const downloadedFiles = new Set<string>();
 
     if (!DRIVE_IMAGES_FOLDER_ID) {
         console.log("  ℹ️ GOOGLE_DRIVE_IMAGES_FOLDER_ID non impostato: skip download immagini");
-    } else if (immaginiRows.length === 0 && !(storiaRows.length > 0 && (storiaRows[0]?.fotoVolontari ?? storiaRows[0]?.foto)?.trim())) {
-        console.log("  ℹ️ Nessun nome file da scaricare (foglio Immagini o Storia.fotoVolontari)");
+    } else if (immaginiRows.length === 0) {
+        console.log("  ℹ️ Nessun nome file da scaricare (foglio Immagini vuoto o assente)");
     } else {
         const fileNamesToFetch = new Map<string, string>();
         if (immaginiRows.length > 0) {
@@ -289,10 +304,6 @@ async function main() {
             ).trim();
             if (id && fileName) fileNamesToFetch.set(id, fileName);
         }
-        const fotoVolontariFileName = (storiaRows[0]?.fotoVolontari ?? storiaRows[0]?.foto ?? "").trim();
-        if (fotoVolontariFileName) {
-            fileNamesToFetch.set("volontari", fotoVolontariFileName);
-        }
         const uniqueFiles = [...new Set(fileNamesToFetch.values())];
         console.log(`  📷 Drive folder: ${DRIVE_IMAGES_FOLDER_ID}`);
         console.log(`  📷 File da cercare: ${uniqueFiles.join(", ") || "(nessuno)"}`);
@@ -302,6 +313,7 @@ async function main() {
                 if (fileId) {
                     const destPath = path.join(imagesDir, fileName);
                     await downloadFileTo(drive, fileId, destPath);
+                    downloadedFiles.add(fileName);
                     console.log(`  📷 Downloaded ${fileName}`);
                 } else {
                     console.warn(`  ⚠️ File non trovato in Drive: "${fileName}" (nome deve coincidere esattamente, controlla anche estensione)`);
@@ -316,7 +328,9 @@ async function main() {
             }
         }
         for (const [id, fileName] of fileNamesToFetch) {
-            imagesMap[id] = `/images/${fileName}`;
+            if (downloadedFiles.has(fileName)) {
+                imagesMap[id] = `/images/${fileName}`;
+            }
         }
     }
 
@@ -329,34 +343,37 @@ async function main() {
         fs.mkdirSync(dataDir, { recursive: true });
     }
 
-    // Build images.json (path per home, sports; volontari in storia.json)
-    const imagesData: Record<string, string> = { ...defaultImages, ...imagesMap };
+    // Build images.json (solo le immagini scaricate con successo dal foglio Immagini)
+    const imagesData: Record<string, string> = { ...imagesMap };
     const imagesPath = path.join(dataDir, "images.json");
     fs.writeFileSync(imagesPath, JSON.stringify(imagesData, null, 4), "utf-8");
     console.log("📁 Written data/images.json");
 
-    // Build storia.json from first row (columns: titolo, contenuto, fotoVolontari = nome file)
+    // Build storia.json from first row of Storia sheet (solo titolo e contenuto; niente default)
+    // Colonne ammesse: titolo/Titolo | contenuto/Contenuto/Testo/Descrizione
     const storiaPath = path.join(dataDir, "storia.json");
-    const defaultStoria = {
-        titolo: "La nostra storia",
-        contenuto:
-            "La Sagra di Fogliano nasce dalla passione e dalla tradizione della nostra comunità.",
-        fotoVolontari: "/images/volontari.jpg",
-    };
-    let storiaData = defaultStoria;
+    let storiaData = { titolo: "", contenuto: "" };
     if (storiaRows.length > 0) {
         const first = storiaRows[0];
-        const titolo = (first.titolo ?? first.Titolo ?? "").trim();
-        const contenuto = (first.contenuto ?? first.Contenuto ?? "").trim();
-        const fotoVolontariRaw = (first.fotoVolontari ?? first.foto ?? "").trim();
-        const fotoVolontari =
-            imagesMap.volontari ?? (fotoVolontariRaw.startsWith("/") ? fotoVolontariRaw : fotoVolontariRaw ? `/images/${fotoVolontariRaw}` : defaultStoria.fotoVolontari);
-        if (titolo || contenuto || fotoVolontari) {
-            storiaData = {
-                titolo: titolo || defaultStoria.titolo,
-                contenuto: contenuto || defaultStoria.contenuto,
-                fotoVolontari: fotoVolontari || defaultStoria.fotoVolontari,
-            };
+        const storiaKeys = Object.keys(first);
+        console.log(`  📄 Colonne foglio Storia: ${storiaKeys.join(", ")}`);
+        const titolo = (
+            first.titolo ?? first.Titolo ?? first["titolo"] ?? ""
+        ).trim();
+        const contenuto = (
+            first.contenuto ??
+            first.Contenuto ??
+            first.testo ??
+            first.Testo ??
+            first.descrizione ??
+            first.Descrizione ??
+            first["contenuto"] ??
+            first["testo"] ??
+            ""
+        ).trim();
+        storiaData = { titolo, contenuto };
+        if (!titolo && !contenuto) {
+            console.warn("  ⚠️ Storia: titolo e contenuto vuoti (verifica nomi colonne: titolo, contenuto o testo)");
         }
     }
 

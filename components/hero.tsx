@@ -9,6 +9,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { CalendarDays, MapPin, BookOpen, Users } from "lucide-react"
+import immaginiData from "@/data/images.json"
 import storiaData from "@/data/storia.json"
 
 export function Hero() {
@@ -18,7 +19,7 @@ export function Hero() {
       {/* Background image */}
       <div className="absolute inset-0">
         <img
-          src="/images/home.jpeg"
+          src={immaginiData.home ?? "/images/home.jpeg"}
           alt="Festa della Sagra di Fogliano con tavoli imbanditi e luci festose"
           className="w-full h-full object-cover"
         />

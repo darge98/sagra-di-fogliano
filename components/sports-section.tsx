@@ -25,6 +25,7 @@ import {
   ListChecks,
 } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
+import immaginiData from "@/data/images.json"
 import sportEventsData from "@/data/sports-cards.json"
 
 interface SportDetailData {
@@ -95,7 +96,7 @@ export function SportsSection() {
         {/* Sport image banner */}
         <div className="relative rounded-2xl overflow-hidden mb-12 h-64 md:h-80">
           <img
-            src="/images/sports.jpg"
+            src={immaginiData.sports ?? "/images/sports.jpg"}
             alt="Giornate dello Sportivo alla Sagra di Fogliano"
             className="w-full h-full object-cover"
           />

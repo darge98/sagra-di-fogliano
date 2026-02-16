@@ -5,6 +5,7 @@ import { SportsSection } from "@/components/sports-section"
 import { RegistrationForm } from "@/components/registration-form"
 import { SponsorsSection } from "@/components/sponsors-section"
 import { Footer } from "@/components/footer"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export default function Page() {
   return (
@@ -18,6 +19,7 @@ export default function Page() {
         <SponsorsSection />
       </main>
       <Footer />
+      <SpeedInsights />
     </>
   )
 }

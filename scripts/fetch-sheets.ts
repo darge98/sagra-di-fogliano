@@ -3,7 +3,7 @@ import * as fs from "fs";
 import * as path from "path";
 import * as dotenv from "dotenv";
 
-// Carica esplicitamente il file .env.local
+// Carica esplicitamente il file .env
 dotenv.config({ path: ".env" });
 
 // ---------------------------------------------------------------------------
@@ -17,7 +17,6 @@ const SCOPES = [
 const SERVICE_ACCOUNT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL!;
 const PRIVATE_KEY = (process.env.GOOGLE_PRIVATE_KEY ?? "").replace(/\\n/g, "\n");
 const SPREADSHEET_ID = process.env.GOOGLE_SPREADSHEET_ID!;
-/** ID cartella Google Drive con le immagini (home, volontari, sports). Opzionale: vedi .env.example */
 const DRIVE_IMAGES_FOLDER_ID = process.env.GOOGLE_DRIVE_IMAGES_FOLDER_ID;
 
 // Sheet names (must match exactly the tabs in your Google Sheet)

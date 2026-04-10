@@ -7,6 +7,7 @@ import {
   type MemberRow,
   type RegistrationPayload,
 } from "@/lib/google-sport-registration";
+import { sendRegistrationEmail } from "@/lib/send-registration-email";
 
 export async function POST(request: Request) {
   try {
@@ -87,6 +88,14 @@ export async function POST(request: Request) {
     };
 
     await appendRegistrationToSheet(spreadsheetId, sportLabel, payload);
+
+    // Invia email di conferma al referente (non blocca la registrazione in caso di errore)
+    await sendRegistrationEmail({
+      sportId: sport,
+      sportLabel,
+      teamName: teamName || "Individuale",
+      contactEmail,
+    });
 
     return NextResponse.json({ success: true });
   } catch (error) {

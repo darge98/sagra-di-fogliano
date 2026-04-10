@@ -31,6 +31,7 @@ export interface MemberRow {
   birthPlace: string;
   address: string;
   certificateFileName: string;
+  shirtSize?: string;
 }
 
 export interface RegistrationPayload {
@@ -154,6 +155,7 @@ export async function ensureSheetHeaders(spreadsheetId: string) {
               "Data Nascita",
               "Luogo Nascita",
               "Indirizzo",
+              "Taglia Canotta",
               "Nome File Certificato",
             ],
           ],
@@ -186,6 +188,7 @@ export async function appendRegistrationToSheet(
     member.birthDate,
     member.birthPlace,
     member.address,
+    member.shirtSize || "",
     member.certificateFileName,
   ]);
 

@@ -32,6 +32,7 @@ export async function POST(request: Request) {
       birthDate: string;
       birthPlace: string;
       address: string;
+      shirtSize?: string;
     }>;
 
     if (!Array.isArray(membersData) || membersData.length === 0) {
@@ -68,6 +69,7 @@ export async function POST(request: Request) {
         birthPlace: m.birthPlace,
         address: m.address,
         certificateFileName,
+        ...(m.shirtSize ? {  } : {}),
       } satisfies MemberRow;
     });
 

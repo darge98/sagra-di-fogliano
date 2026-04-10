@@ -64,6 +64,7 @@ interface TeamMember {
   birthPlace: string
   address: string
   medicalCertificate: File | null
+  shirtSize: string
 }
 
 function createMember(): TeamMember {
@@ -76,6 +77,7 @@ function createMember(): TeamMember {
     birthPlace: "",
     address: "",
     medicalCertificate: null,
+    shirtSize: "",
   }
 }
 
@@ -90,6 +92,7 @@ interface MemberFieldsProps {
   removeMember: (id: string) => void
   canRemove: boolean
   showHeader?: boolean
+  showShirtSize?: boolean
 }
 
 function MemberFields({
@@ -99,6 +102,7 @@ function MemberFields({
   removeMember,
   canRemove,
   showHeader = true,
+  showShirtSize = false,
 }: MemberFieldsProps) {
   return (
     <div className={`space-y-4 ${showHeader ? "rounded-lg border border-border bg-background p-6" : ""}`}>
@@ -213,21 +217,50 @@ function MemberFields({
         </div>
       </div>
 
-      <div className="space-y-1">
-        <Label
-          htmlFor={`member-addr-${member.id}`}
-          className="text-foreground text-xs font-semibold"
-        >
-          Indirizzo di Residenza *
-        </Label>
-        <Input
-          id={`member-addr-${member.id}`}
-          value={member.address}
-          onChange={(e) => updateMember(member.id, "address", e.target.value)}
-          placeholder="Via Roma 1, Reggio Emilia"
-          required
-          className="bg-card border-input h-9 text-sm"
-        />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="space-y-1">
+          <Label
+            htmlFor={`member-addr-${member.id}`}
+            className="text-foreground text-xs font-semibold"
+          >
+            Indirizzo di Residenza *
+          </Label>
+          <Input
+            id={`member-addr-${member.id}`}
+            value={member.address}
+            onChange={(e) => updateMember(member.id, "address", e.target.value)}
+            placeholder="Via Roma 1, Reggio Emilia"
+            required
+            className="bg-card border-input h-9 text-sm"
+          />
+        </div>
+
+        {showShirtSize && (
+          <div className="space-y-1">
+            <Label
+              htmlFor={`member-shirt-${member.id}`}
+              className="text-foreground text-xs font-semibold"
+            >
+              Taglia Canotta *
+            </Label>
+            <Select
+              value={member.shirtSize}
+              onValueChange={(value) => updateMember(member.id, "shirtSize", value)}
+              required
+            >
+              <SelectTrigger id={`member-shirt-${member.id}`} className="bg-card border-input h-9 text-sm">
+                <SelectValue placeholder="Scegli taglia" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="S">S</SelectItem>
+                <SelectItem value="M">M</SelectItem>
+                <SelectItem value="L">L</SelectItem>
+                <SelectItem value="XL">XL</SelectItem>
+                <SelectItem value="XXL">XXL</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
       </div>
 
       <div className="space-y-1">
@@ -338,6 +371,7 @@ export function RegistrationForm() {
             birthDate: m.birthDate,
             birthPlace: m.birthPlace,
             address: m.address,
+            ...(m.shirtSize ? { shirtSize: m.shirtSize } : {}),
           }))
         )
       )
@@ -596,6 +630,7 @@ export function RegistrationForm() {
                         removeMember={removeMember}
                         canRemove={sport ? index >= sport.minPlayers : false}
                         showHeader={true}
+                        showShirtSize={selectedSport === "4fogliano"}
                       />
                     ))}
 

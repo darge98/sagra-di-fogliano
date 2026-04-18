@@ -42,15 +42,26 @@ export function Footer() {
             <div className="space-y-3">
               <div className="flex items-center gap-3 text-sm text-primary-foreground/70">
                 <MapPin className="h-4 w-4 shrink-0" />
-                <span>Fogliano, Reggio Emilia (RE)</span>
+                <a 
+                  href="https://maps.google.com/?q=Via+Enrico+Fermi+57+Reggio+Emilia" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="hover:text-primary-foreground transition-colors hover:underline"
+                >
+                  42123 Fogliano, RE
+                </a>
               </div>
               <div className="flex items-center gap-3 text-sm text-primary-foreground/70">
                 <Phone className="h-4 w-4 shrink-0" />
-                <span>+39 0522 123456</span>
+                <a href="tel:+390522520046" className="hover:text-primary-foreground transition-colors hover:underline">
+                  +39 0522 520046
+                </a>
               </div>
               <div className="flex items-center gap-3 text-sm text-primary-foreground/70">
                 <Mail className="h-4 w-4 shrink-0" />
-                <span>info@sagradifogliano.it</span>
+                <a href="mailto:sagradifogliano@gmail.com" className="hover:text-primary-foreground transition-colors hover:underline">
+                  sagradifogliano@gmail.com
+                </a>
               </div>
             </div>
           </div>

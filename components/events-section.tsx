@@ -350,7 +350,7 @@ export function EventsSection() {
             <div className="pt-4 border-t border-border flex items-center gap-2 text-sm text-muted-foreground">
               <MapPin className="h-4 w-4" />
               <span>
-                Centro Sociale di Fogliano, Via Nervi 23 - Reggio Emilia
+                Centro Sociale di Fogliano, Via Enrico Fermi 57 - Reggio Emilia
               </span>
             </div>
           </DialogContent>

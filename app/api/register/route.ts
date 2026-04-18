@@ -17,6 +17,7 @@ export async function POST(request: Request) {
     const teamName = (formData.get("teamName") as string) || "";
     const contactEmail = formData.get("contactEmail") as string | null;
     const contactPhone = formData.get("contactPhone") as string | null;
+    const socialAuth = formData.get("socialAuth") === "true";
     const membersJson = formData.get("members") as string | null;
 
     if (!sport || !sportLabel || !contactEmail || !contactPhone || !membersJson) {
@@ -84,6 +85,7 @@ export async function POST(request: Request) {
       teamName: teamName || "Individuale",
       contactEmail,
       contactPhone,
+      socialAuth,
       members,
     };
 

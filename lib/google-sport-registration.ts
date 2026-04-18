@@ -40,6 +40,7 @@ export interface RegistrationPayload {
   teamName: string;
   contactEmail: string;
   contactPhone: string;
+  socialAuth: boolean;
   members: MemberRow[];
 }
 
@@ -157,6 +158,7 @@ export async function ensureSheetHeaders(spreadsheetId: string) {
               "Indirizzo",
               "Taglia Canotta",
               "Nome File Certificato",
+              "Autorizzazione Foto/Social",
             ],
           ],
         },
@@ -190,12 +192,13 @@ export async function appendRegistrationToSheet(
     member.address,
     member.shirtSize || "",
     member.certificateFileName,
+    payload.socialAuth ? "Sì" : "No",
   ]);
 
   try {
     await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: `${sheetName}!A:M`,
+      range: `${sheetName}!A:N`,
       valueInputOption: "USER_ENTERED",
       requestBody: {
         values: rows,

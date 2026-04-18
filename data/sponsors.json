@@ -1,38 +1,36 @@
 [
   {
-    "id": "sponsor-1",
-    "name": "Sponsor",
-    "logo": "/placeholder-logo.png",
-    "url": "#"
+    "id": "sponsor-scandauto",
+    "name": "SCANDAUTO",
+    "logo": "/sponsors/scandauto.png",
+    "url": "https://www.scandautosrl.it/"
   },
   {
-    "id": "sponsor-2",
-    "name": "Sponsor",
-    "logo": "/placeholder-logo.png",
-    "url": "#"
+    "id": "sponsor-sassi-pozzi",
+    "name": "Sassi pozzi",
+    "logo": "/sponsors/sassi-pozzi.png",
+    "url": "https://www.sassiroberto.it/"
   },
   {
-    "id": "sponsor-3",
-    "name": "Sponsor",
-    "logo": "/placeholder-logo.png",
-    "url": "#"
+    "id": "sponsor-little-rock",
+    "name": "Pizzeria Little rock",
+    "logo": "/sponsors/little-rock.png",
+    "url": "https://pizzerialittlerock.it/",
+    "scale": 1.65,
+    "className": "mix-blend-multiply"
   },
   {
-    "id": "sponsor-4",
-    "name": "Sponsor",
-    "logo": "/placeholder-logo.png",
-    "url": "#"
+    "id": "sponsor-orchidea",
+    "name": "Pizzeria Orchidea",
+    "logo": "/sponsors/orchidea.png",
+    "url": "https://www.pizzaorchidea.it/"
   },
   {
-    "id": "sponsor-5",
-    "name": "Sponsor",
-    "logo": "/placeholder-logo.png",
-    "url": "#"
-  },
-  {
-    "id": "sponsor-6",
-    "name": "Sponsor",
-    "logo": "/placeholder-logo.png",
-    "url": "#"
+    "id": "sponsor-vf-home-essential",
+    "name": "Vf home essential",
+    "logo": "/sponsors/vf-home-essential.png",
+    "url": "https://www.instagram.com/vf_homessentials?igsh=MTRzcjN4NnM1cmYw",
+    "containerClassName": "border-2 border-border bg-[#e9dfd1] p-4 transition-all duration-300 hover:scale-105",
+    "scale": 1.75
   }
 ]

@@ -27,24 +27,24 @@ const sportOptions = [
     label: "Calcio a 8",
     type: "squadra" as const,
     minPlayers: 8,
-    // maxPlayers removed to allow unlimited
-    hint: "Minimo 8 giocatori",
+    maxPlayers: 15,
+    hint: "Min 8, Max 15 giocatori",
   },
   {
     value: "beachvolley",
     label: "Beach Volley",
     type: "squadra" as const,
     minPlayers: 4,
-    // maxPlayers removed
-    hint: "Minimo 4 giocatori",
+    maxPlayers: 8,
+    hint: "Min 4, Max 8 giocatori",
   },
   {
     value: "4fogliano",
     label: "4Fogliano (Basket)",
     type: "squadra" as const,
     minPlayers: 4,
-    // maxPlayers removed
-    hint: "Minimo 4 giocatori",
+    maxPlayers: 8,
+    hint: "Min 4, Max 8 giocatori",
   },
   {
     value: "lodolata",

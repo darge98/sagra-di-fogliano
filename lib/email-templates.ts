@@ -6,7 +6,7 @@
  */
 
 const PAGAMENTO_IBAN = "IT93I0503412805000000000435 (Parrocchia san Colombano)";
-const PAGAMENTO_SATISPAY = "[Inserisci link o numero di telefono]";
+const PAGAMENTO_SATISPAY = "<a href=\"https://web.satispay.com/app/open/shops/088e4a6c-5612-48f9-9d69-521499474fef\">Clicca qui per il pagamento</a>";
 
 interface SportConfig {
   sportName: string;

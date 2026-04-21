@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import {
@@ -166,7 +167,7 @@ export function SportsSection() {
                         asChild
                         className="w-full bg-sport text-sport-foreground hover:bg-sport/90 font-bold"
                       >
-                        <a href="#iscrizione">Iscriviti Ora</a>
+                        <Link href={`?sport=${sport.id}#iscrizione`}>Iscriviti Ora</Link>
                       </Button>
                     </div>
                   </div>
@@ -246,7 +247,7 @@ export function SportsSection() {
                 asChild
                 className="w-full bg-sport text-sport-foreground hover:bg-sport/90 font-bold"
               >
-                <a href="#iscrizione">Iscriviti Ora</a>
+                <Link href={`?sport=${selectedSport.id}#iscrizione`}>Iscriviti Ora</Link>
               </Button>
             </div>
           </DialogContent>

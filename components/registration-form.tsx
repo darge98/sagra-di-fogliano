@@ -3,7 +3,8 @@
 import React from "react"
 import imageCompression from "browser-image-compression"
 import { compress } from "@quicktoolsone/pdf-compress"
-import { useState } from "react"
+import { useState, useEffect, Suspense } from "react"
+import { useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -296,6 +297,14 @@ function MemberFields({
 }
 
 export function RegistrationForm() {
+  return (
+    <Suspense fallback={null}>
+      <RegistrationFormContent />
+    </Suspense>
+  )
+}
+
+function RegistrationFormContent() {
   const [submitted, setSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
@@ -308,6 +317,22 @@ export function RegistrationForm() {
 
   const sport = sportOptions.find((s) => s.value === selectedSport)
 
+  const searchParams = useSearchParams()
+  const sportParam = searchParams.get("sport")
+
+  useEffect(() => {
+    if (sportParam && sportParam !== selectedSport) {
+      const sportExists = sportOptions.find(s => s.value === sportParam)
+      if (sportExists) {
+        handleSportChange(sportParam)
+        const element = document.getElementById("iscrizione")
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" })
+        }
+      }
+    }
+  }, [sportParam, selectedSport])
+
   function handleSportChange(value: string) {
     setSelectedSport(value)
     const newSport = sportOptions.find((s) => s.value === value)
@@ -315,7 +340,6 @@ export function RegistrationForm() {
       setMembers(Array.from({ length: newSport.minPlayers }, () => createMember()))
     }
   }
-
   function addMember() {
     if (sport) {
       // Allow adding if no maxPlayers defined or if below maxPlayers

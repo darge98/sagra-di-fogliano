@@ -43,7 +43,7 @@ export function Hero() {
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
           <div className="flex items-center gap-2 text-primary-foreground/80">
             <CalendarDays className="h-5 w-5" />
-            <span className="text-sm font-semibold">14 - 22 Giugno 2025</span>
+            <span className="text-sm font-semibold">13 - 21 Giugno 2026</span>
           </div>
           <div className="hidden sm:block w-px h-5 bg-primary-foreground/30" />
           <div className="flex items-center gap-2 text-primary-foreground/80">

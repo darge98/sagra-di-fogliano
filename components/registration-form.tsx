@@ -43,8 +43,8 @@ const sportOptions = [
     label: "4Fogliano (Basket)",
     type: "squadra" as const,
     minPlayers: 4,
-    maxPlayers: 8,
-    hint: "Min 4, Max 8 giocatori",
+    maxPlayers: 7,
+    hint: "Min 4, Max 7 giocatori",
   },
   {
     value: "lodolata",

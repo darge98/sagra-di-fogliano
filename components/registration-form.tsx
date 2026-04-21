@@ -355,6 +355,14 @@ export function RegistrationForm() {
     e.preventDefault()
     if (!sport) return
     setSubmitError(null)
+    if (!selectedSport) {
+      setSubmitError("Per favore, seleziona un evento sportivo.")
+      return
+    }
+    if (!socialAuth) {
+      setSubmitError("È obbligatorio selezionare un'opzione per il consenso foto e video.")
+      return
+    }
     setIsSubmitting(true)
     try {
       const formData = new FormData()
@@ -509,6 +517,7 @@ export function RegistrationForm() {
                 Evento Sportivo *
               </Label>
               <Select
+                name="sport"
                 value={selectedSport}
                 onValueChange={handleSportChange}
                 required
@@ -670,6 +679,7 @@ export function RegistrationForm() {
                     Autorizzo l{"'"}utilizzo e la pubblicazione di foto e video {isIndividual ? "del partecipante" : "della squadra"} sui canali social della Sagra di Fogliano a scopo promozionale e documentativo.
                   </p>
                   <Select
+                    name="socialAuth"
                     value={socialAuth}
                     onValueChange={setSocialAuth}
                     required

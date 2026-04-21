@@ -15,7 +15,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
 import { CheckCircle2, Loader2, Send, Plus, Trash2, Users } from "lucide-react"
 
 const MAX_CERTIFICATE_MB = 20
@@ -304,7 +303,7 @@ export function RegistrationForm() {
   const [teamName, setTeamName] = useState("")
   const [contactEmail, setContactEmail] = useState("")
   const [contactPhone, setContactPhone] = useState("")
-  const [socialAuth, setSocialAuth] = useState(false)
+  const [socialAuth, setSocialAuth] = useState<string>("")
   const [members, setMembers] = useState<TeamMember[]>([createMember()])
 
   const sport = sportOptions.find((s) => s.value === selectedSport)
@@ -348,7 +347,7 @@ export function RegistrationForm() {
     setTeamName("")
     setContactEmail("")
     setContactPhone("")
-    setSocialAuth(false)
+    setSocialAuth("")
     setMembers([createMember()])
   }
 
@@ -364,7 +363,7 @@ export function RegistrationForm() {
       formData.set("teamName", teamName)
       formData.set("contactEmail", contactEmail)
       formData.set("contactPhone", contactPhone)
-      formData.set("socialAuth", socialAuth.toString())
+      formData.set("socialAuth", (socialAuth === "SI").toString())
       formData.set(
         "members",
         JSON.stringify(
@@ -662,17 +661,27 @@ export function RegistrationForm() {
               )}
 
               {/* Autorizzazioni */}
-              <div className="space-y-4 pt-4 border-t border-border">
-                <div className="flex items-start space-x-3">
-                  <Checkbox
-                    id="socialAuth"
-                    checked={socialAuth}
-                    onCheckedChange={(checked) => setSocialAuth(checked as boolean)}
-                    className="mt-1"
-                  />
-                  <Label htmlFor="socialAuth" className="text-sm text-muted-foreground leading-snug font-normal">
+              <div className="space-y-3 pt-4 border-t border-border">
+                <Label htmlFor="socialAuth" className="text-foreground font-semibold">
+                  Consenso Foto e Video *
+                </Label>
+                <div className="space-y-3">
+                  <p className="text-sm text-muted-foreground leading-snug font-normal">
                     Autorizzo l{"'"}utilizzo e la pubblicazione di foto e video {isIndividual ? "del partecipante" : "della squadra"} sui canali social della Sagra di Fogliano a scopo promozionale e documentativo.
-                  </Label>
+                  </p>
+                  <Select
+                    value={socialAuth}
+                    onValueChange={setSocialAuth}
+                    required
+                  >
+                    <SelectTrigger id="socialAuth" className="bg-background border-input">
+                      <SelectValue placeholder="Seleziona un'opzione" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="SI">SI</SelectItem>
+                      <SelectItem value="NO">NO</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
 

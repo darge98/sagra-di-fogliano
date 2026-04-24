@@ -182,9 +182,9 @@ export function EventsSection() {
                       </li>
                     )}
                   </ul>
-                  <p className="mt-5 text-xs font-bold uppercase tracking-wider group-hover:underline">
+                 {/* <p className="mt-5 text-xs font-bold uppercase tracking-wider group-hover:underline">
                     Scopri il programma completo
-                  </p>
+                  </p> */}
                 </div>
               </CardContent>
             </Card>

@@ -4,7 +4,7 @@ import React from "react"
 import imageCompression from "browser-image-compression"
 import { compress } from "@quicktoolsone/pdf-compress"
 import { useState, useEffect, Suspense } from "react"
-import { useSearchParams } from "next/navigation"
+import { useSearchParams, useRouter, usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -314,6 +314,9 @@ function RegistrationFormContent() {
   const [contactPhone, setContactPhone] = useState("")
   const [socialAuth, setSocialAuth] = useState<string>("")
   const [members, setMembers] = useState<TeamMember[]>([createMember()])
+  
+  const router = useRouter()
+  const pathname = usePathname()
 
   const sport = sportOptions.find((s) => s.value === selectedSport)
 
@@ -324,17 +327,25 @@ function RegistrationFormContent() {
     if (sportParam && sportParam !== selectedSport) {
       const sportExists = sportOptions.find(s => s.value === sportParam)
       if (sportExists) {
-        handleSportChange(sportParam)
+        setSelectedSport(sportParam)
+        setMembers(Array.from({ length: sportExists.minPlayers }, () => createMember()))
+        
         const element = document.getElementById("iscrizione")
         if (element) {
           element.scrollIntoView({ behavior: "smooth" })
         }
       }
     }
-  }, [sportParam, selectedSport])
+  }, [sportParam])
 
   function handleSportChange(value: string) {
     setSelectedSport(value)
+    
+    // Update URL
+    const params = new URLSearchParams(searchParams.toString())
+    params.set("sport", value)
+    router.replace(`${pathname}?${params.toString()}#iscrizione`, { scroll: false })
+
     const newSport = sportOptions.find((s) => s.value === value)
     if (newSport) {
       setMembers(Array.from({ length: newSport.minPlayers }, () => createMember()))

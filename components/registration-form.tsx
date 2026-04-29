@@ -324,6 +324,17 @@ function RegistrationFormContent() {
   const sportParam = searchParams.get("sport")
 
   useEffect(() => {
+    if (typeof window !== "undefined" && window.location.hash === "#iscrizione") {
+      setTimeout(() => {
+        const element = document.getElementById("iscrizione")
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" })
+        }
+      }, 100)
+    }
+  }, [])
+
+  useEffect(() => {
     if (sportParam && sportParam !== selectedSport) {
       const sportExists = sportOptions.find(s => s.value === sportParam)
       if (sportExists) {

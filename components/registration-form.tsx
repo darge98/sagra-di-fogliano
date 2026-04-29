@@ -94,6 +94,7 @@ interface MemberFieldsProps {
   canRemove: boolean
   showHeader?: boolean
   showShirtSize?: boolean
+  showMedicalCertificate?: boolean
 }
 
 function MemberFields({
@@ -104,6 +105,7 @@ function MemberFields({
   canRemove,
   showHeader = true,
   showShirtSize = false,
+  showMedicalCertificate = true,
 }: MemberFieldsProps) {
   return (
     <div className={`space-y-4 ${showHeader ? "rounded-lg border border-border bg-background p-6" : ""}`}>
@@ -264,34 +266,36 @@ function MemberFields({
         )}
       </div>
 
-      <div className="space-y-1">
-        <Label
-          htmlFor={`member-cert-${member.id}`}
-          className="text-foreground text-xs font-semibold"
-        >
-          Certificato Medico (PDF/FOTO) *
-        </Label>
-        <Input
-          id={`member-cert-${member.id}`}
-          type="file"
-          accept="image/*,.pdf"
-          onChange={(e) =>
-            updateMember(
-              member.id,
-              "medicalCertificate",
-              e.target.files ? e.target.files[0] : null
-            )
-          }
-          required={!member.medicalCertificate}
-          className="bg-card border-input h-9 text-sm cursor-pointer file:text-foreground hover:file:bg-accent file:bg-transparent file:border-0 file:mr-4 file:font-semibold"
-        />
-        {member.medicalCertificate && (
-          <p className="text-xs text-green-600 flex items-center gap-1 mt-1">
-            <CheckCircle2 className="h-3 w-3" />
-            File caricato: {member.medicalCertificate.name}
-          </p>
-        )}
-      </div>
+      {showMedicalCertificate && (
+        <div className="space-y-1">
+          <Label
+            htmlFor={`member-cert-${member.id}`}
+            className="text-foreground text-xs font-semibold"
+          >
+            Certificato Medico (PDF/FOTO) *
+          </Label>
+          <Input
+            id={`member-cert-${member.id}`}
+            type="file"
+            accept="image/*,.pdf"
+            onChange={(e) =>
+              updateMember(
+                member.id,
+                "medicalCertificate",
+                e.target.files ? e.target.files[0] : null
+              )
+            }
+            required={!member.medicalCertificate}
+            className="bg-card border-input h-9 text-sm cursor-pointer file:text-foreground hover:file:bg-accent file:bg-transparent file:border-0 file:mr-4 file:font-semibold"
+          />
+          {member.medicalCertificate && (
+            <p className="text-xs text-green-600 flex items-center gap-1 mt-1">
+              <CheckCircle2 className="h-3 w-3" />
+              File caricato: {member.medicalCertificate.name}
+            </p>
+          )}
+        </div>
+      )}
     </div>
   )
 }
@@ -663,6 +667,7 @@ function RegistrationFormContent() {
                         removeMember={removeMember}
                         canRemove={false}
                         showHeader={false}
+                        showMedicalCertificate={selectedSport !== "lodolata"}
                       />
                     </div>
                   )}
@@ -689,6 +694,7 @@ function RegistrationFormContent() {
                         canRemove={sport ? index >= sport.minPlayers : false}
                         showHeader={true}
                         showShirtSize={selectedSport === "4fogliano"}
+                        showMedicalCertificate={selectedSport !== "lodolata"}
                       />
                     ))}
 

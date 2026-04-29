@@ -15,7 +15,7 @@ const sponsors = sponsorsData as SponsorData[]
 
 function SponsorLogo({ sponsor }: { sponsor: SponsorData }) {
   const content = (
-    <div className={`flex items-center justify-center h-20 rounded-xl transition-all duration-300 hover:shadow-lg ${sponsor.containerClassName || "border-2 border-border bg-card p-4 hover:border-sagra"}`}>
+    <div className={`flex items-center justify-center rounded-xl transition-all duration-300 hover:shadow-lg ${sponsor.containerClassName || "h-32 border-2 border-border bg-card p-2 hover:border-sagra"}`}>
       <img
         src={sponsor.logo}
         alt={sponsor.name}

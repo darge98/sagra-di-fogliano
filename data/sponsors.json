@@ -16,7 +16,7 @@
     "name": "Pizzeria Little rock",
     "logo": "/sponsors/little-rock.png",
     "url": "https://pizzerialittlerock.it/",
-    "scale": 1.65,
+    "scale": 1.2,
     "className": "mix-blend-multiply"
   },
   {
@@ -30,7 +30,7 @@
     "name": "Vf home essential",
     "logo": "/sponsors/vf-home-essential.png",
     "url": "https://www.instagram.com/vf_homessentials?igsh=MTRzcjN4NnM1cmYw",
-    "containerClassName": "border-2 border-border bg-[#e9dfd1] p-2 transition-all duration-300 hover:scale-105 overflow-hidden",
+    "containerClassName": "h-32 border-2 border-border bg-[#e9dfd1] p-2 transition-all duration-300 hover:scale-105 overflow-hidden",
     "scale": 1.2
   }
 ]

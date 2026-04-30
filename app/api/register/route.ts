@@ -19,6 +19,7 @@ export async function POST(request: Request) {
     const contactPhone = formData.get("contactPhone") as string | null;
     const socialAuth = formData.get("socialAuth") === "true";
     const membersJson = formData.get("members") as string | null;
+    const crossSportNotes = (formData.get("crossSportNotes") as string) || "";
 
     if (!sport || !sportLabel || !contactEmail || !contactPhone || !membersJson) {
       return NextResponse.json(
@@ -88,6 +89,7 @@ export async function POST(request: Request) {
       contactEmail,
       contactPhone,
       socialAuth,
+      crossSportNotes,
       members,
     };
 

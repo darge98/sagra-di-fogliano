@@ -339,6 +339,7 @@ function RegistrationFormContent() {
   const [contactEmail, setContactEmail] = useState("")
   const [contactPhone, setContactPhone] = useState("")
   const [socialAuth, setSocialAuth] = useState<string>("")
+  const [crossSportNotes, setCrossSportNotes] = useState("")
   const [members, setMembers] = useState<TeamMember[]>([createMember()])
   
   const router = useRouter()
@@ -420,6 +421,7 @@ function RegistrationFormContent() {
     setContactEmail("")
     setContactPhone("")
     setSocialAuth("")
+    setCrossSportNotes("")
     setMembers([createMember()])
   }
 
@@ -444,6 +446,7 @@ function RegistrationFormContent() {
       formData.set("contactEmail", contactEmail)
       formData.set("contactPhone", contactPhone)
       formData.set("socialAuth", (socialAuth === "SI").toString())
+      formData.set("crossSportNotes", crossSportNotes)
       formData.set(
         "members",
         JSON.stringify(
@@ -739,6 +742,34 @@ function RegistrationFormContent() {
               )}
 
               
+
+              {/* Note multi-sport – solo per squadre */}
+              {!isIndividual && (
+                <div>
+                  <h3 className="font-serif text-lg font-bold text-foreground mb-1 flex items-center gap-2">
+                    <span className="flex items-center justify-center h-7 w-7 rounded-full bg-sport text-sport-foreground text-xs font-bold">
+                      4
+                    </span>
+                    Partecipazione ad altri sport
+                  </h3>
+                  <div className="ml-9 mt-3 space-y-2">
+                    <Label htmlFor="crossSportNotes" className="text-foreground font-semibold">
+                      Note (opzionale)
+                    </Label>
+                    <p className="text-sm text-muted-foreground leading-snug">
+                      Indica qui se uno o più giocatori di questa squadra partecipano anche ad altri sport della sagra (es. "Mario Rossi – Calcio, Beach Volley").
+                    </p>
+                    <Textarea
+                      id="crossSportNotes"
+                      value={crossSportNotes}
+                      onChange={(e) => setCrossSportNotes(e.target.value)}
+                      placeholder="Es. Mario Rossi – Calcio e Beach Volley&#10;Luca Bianchi – Beach Volley"
+                      rows={4}
+                      className="bg-background border-input text-sm resize-none"
+                    />
+                  </div>
+                </div>
+              )}
 
               {submitError && (
                 <div className="rounded-lg border border-destructive/50 bg-destructive/10 px-4 py-3 text-sm text-destructive">

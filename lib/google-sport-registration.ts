@@ -42,6 +42,7 @@ export interface RegistrationPayload {
   contactEmail: string;
   contactPhone: string;
   socialAuth: boolean;
+  crossSportNotes: string;
   members: MemberRow[];
 }
 
@@ -161,6 +162,7 @@ export async function ensureSheetHeaders(spreadsheetId: string) {
               "Nome File Certificato",
               "Autorizzazione Foto/Social",
               "Società di Appartenenza",
+              "Note Multi-Sport",
             ],
           ],
         },
@@ -196,12 +198,13 @@ export async function appendRegistrationToSheet(
     member.certificateFileName,
     payload.socialAuth ? "Sì" : "No",
     member.society || "",
+    payload.crossSportNotes || "",
   ]);
 
   try {
     await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: `${sheetName}!A:O`,
+      range: `${sheetName}!A:P`,
       valueInputOption: "USER_ENTERED",
       requestBody: {
         values: rows,

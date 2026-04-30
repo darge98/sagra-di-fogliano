@@ -66,6 +66,7 @@ interface TeamMember {
   address: string
   medicalCertificate: File | null
   shirtSize: string
+  society: string
 }
 
 function createMember(): TeamMember {
@@ -79,6 +80,7 @@ function createMember(): TeamMember {
     address: "",
     medicalCertificate: null,
     shirtSize: "",
+    society: "",
   }
 }
 
@@ -95,6 +97,7 @@ interface MemberFieldsProps {
   showHeader?: boolean
   showShirtSize?: boolean
   showMedicalCertificate?: boolean
+  showSociety?: boolean
 }
 
 function MemberFields({
@@ -106,6 +109,7 @@ function MemberFields({
   showHeader = true,
   showShirtSize = false,
   showMedicalCertificate = true,
+  showSociety = false,
 }: MemberFieldsProps) {
   return (
     <div className={`space-y-4 ${showHeader ? "rounded-lg border border-border bg-background p-6" : ""}`}>
@@ -262,6 +266,24 @@ function MemberFields({
                 <SelectItem value="XXL">XXL</SelectItem>
               </SelectContent>
             </Select>
+          </div>
+        )}
+
+        {showSociety && (
+          <div className="space-y-1">
+            <Label
+              htmlFor={`member-society-${member.id}`}
+              className="text-foreground text-xs font-semibold"
+            >
+              Società di Appartenenza
+            </Label>
+            <Input
+              id={`member-society-${member.id}`}
+              value={member.society}
+              onChange={(e) => updateMember(member.id, "society", e.target.value)}
+              placeholder="Nome Società (opzionale)"
+              className="bg-card border-input h-9 text-sm"
+            />
           </div>
         )}
       </div>
@@ -433,6 +455,7 @@ function RegistrationFormContent() {
             birthPlace: m.birthPlace,
             address: m.address,
             ...(m.shirtSize ? { shirtSize: m.shirtSize } : {}),
+            ...(m.society ? { society: m.society } : {}),
           }))
         )
       )
@@ -668,6 +691,7 @@ function RegistrationFormContent() {
                         canRemove={false}
                         showHeader={false}
                         showMedicalCertificate={selectedSport !== "lodolata"}
+                        showSociety={selectedSport === "lodolata"}
                       />
                     </div>
                   )}
@@ -695,6 +719,7 @@ function RegistrationFormContent() {
                         showHeader={true}
                         showShirtSize={selectedSport === "4fogliano"}
                         showMedicalCertificate={selectedSport !== "lodolata"}
+                        showSociety={selectedSport === "lodolata"}
                       />
                     ))}
 

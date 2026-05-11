@@ -44,6 +44,7 @@ interface SportEventData {
   time: string
   description: string
   prize: string
+  closed?: boolean
   details?: SportDetailData[]
 }
 
@@ -70,6 +71,7 @@ interface SportEvent {
   time: string
   description: string
   prize: string
+  closed?: boolean
   details?: SportDetailData[]
 }
 
@@ -109,7 +111,7 @@ export function SportsSection() {
                 Sfida i migliori!
               </h3>
               <p className="mt-2 text-lg">
-                Iscrizioni aperte per tutti i tornei
+                Iscrizioni aperte
               </p>
             </div>
           </div>
@@ -164,10 +166,19 @@ export function SportsSection() {
                         </Button>
                       )}
                       <Button
-                        asChild
-                        className="w-full bg-sport text-sport-foreground hover:bg-sport/90 font-bold"
+                        asChild={!sport.closed}
+                        disabled={sport.closed}
+                        className={`w-full font-bold ${
+                          sport.closed 
+                          ? "bg-muted text-muted-foreground border border-border cursor-not-allowed" 
+                          : "bg-sport text-sport-foreground hover:bg-sport/90"
+                        }`}
                       >
-                        <Link href={`?sport=${sport.id}#iscrizione`}>Iscriviti Ora</Link>
+                        {sport.closed ? (
+                          "Iscrizioni Chiuse"
+                        ) : (
+                          <Link href={`?sport=${sport.id}#iscrizione`}>Iscriviti Ora</Link>
+                        )}
                       </Button>
                     </div>
                   </div>
@@ -244,10 +255,19 @@ export function SportsSection() {
             {/* CTA footer */}
             <div className="mt-4 pt-4 border-t border-border">
               <Button
-                asChild
-                className="w-full bg-sport text-sport-foreground hover:bg-sport/90 font-bold"
+                asChild={!selectedSport.closed}
+                disabled={selectedSport.closed}
+                className={`w-full font-bold ${
+                  selectedSport.closed 
+                  ? "bg-muted text-muted-foreground border border-border cursor-not-allowed" 
+                  : "bg-sport text-sport-foreground hover:bg-sport/90"
+                }`}
               >
-                <Link href={`?sport=${selectedSport.id}#iscrizione`}>Iscriviti Ora</Link>
+                {selectedSport.closed ? (
+                  "Iscrizioni Chiuse"
+                ) : (
+                  <Link href={`?sport=${selectedSport.id}#iscrizione`}>Iscriviti Ora</Link>
+                )}
               </Button>
             </div>
           </DialogContent>

@@ -30,6 +30,7 @@ const sportOptions = [
     minPlayers: 8,
     maxPlayers: 15,
     hint: "Min 8, Max 15 giocatori",
+    closed: true,
   },
   {
     value: "beachvolley",
@@ -365,7 +366,7 @@ function RegistrationFormContent() {
 
   useEffect(() => {
     if (sportParam && sportParam !== selectedSport) {
-      const sportExists = sportOptions.find(s => s.value === sportParam)
+      const sportExists = sportOptions.find(s => s.value === sportParam && !s.closed)
       if (sportExists) {
         setSelectedSport(sportParam)
         setMembers(Array.from({ length: sportExists.minPlayers }, () => createMember()))
@@ -580,6 +581,14 @@ function RegistrationFormContent() {
             Compila il modulo per iscriverti al torneo sportivo. Vi
             ricontatteremo per confermare la partecipazione.
           </p>
+          
+          {sportOptions.some(s => s.closed) && (
+            <div className="mt-6 inline-block px-4 py-2 bg-muted rounded-full border border-border">
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                Iscrizioni chiuse: {sportOptions.filter(s => s.closed).map(s => s.label).join(", ")}
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Form */}
@@ -609,7 +618,7 @@ function RegistrationFormContent() {
                   <SelectValue placeholder="Seleziona un evento" />
                 </SelectTrigger>
                 <SelectContent>
-                  {sportOptions.map((option) => (
+                  {sportOptions.filter(o => !o.closed).map((option) => (
                     <SelectItem key={option.value} value={option.value}>
                       {option.label}
                     </SelectItem>

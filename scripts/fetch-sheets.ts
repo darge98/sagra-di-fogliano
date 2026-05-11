@@ -214,6 +214,9 @@ function buildSportsCards(
                 return item;
             });
 
+        // Controlla se lo sport è chiuso (colonna 'closed' o 'chiuso')
+        const closed = toBool(sport.closed || sport.chiuso || sport.Chiuso);
+
         return {
             id: sport.id,
             title: sport.title,
@@ -222,6 +225,7 @@ function buildSportsCards(
             time: sport.time,
             description: sport.description,
             prize: sport.prize,
+            closed: closed || undefined, // Aggiunto il campo closed
             ...(details.length > 0 ? { details } : {}),
         };
     });

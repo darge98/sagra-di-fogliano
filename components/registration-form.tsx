@@ -17,6 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { CheckCircle2, Loader2, Send, Plus, Trash2, Users } from "lucide-react"
+import { Checkbox } from "@/components/ui/checkbox"
 
 const MAX_CERTIFICATE_MB = 20
 const MAX_CERTIFICATE_BYTES = MAX_CERTIFICATE_MB * 1024 * 1024
@@ -339,6 +340,7 @@ function RegistrationFormContent() {
   const [contactEmail, setContactEmail] = useState("")
   const [contactPhone, setContactPhone] = useState("")
   const [socialAuth, setSocialAuth] = useState<string>("")
+  const [responsibilityAcceptance, setResponsibilityAcceptance] = useState(false)
   const [crossSportNotes, setCrossSportNotes] = useState("")
   const [members, setMembers] = useState<TeamMember[]>([createMember()])
   
@@ -421,6 +423,7 @@ function RegistrationFormContent() {
     setContactEmail("")
     setContactPhone("")
     setSocialAuth("")
+    setResponsibilityAcceptance(false)
     setCrossSportNotes("")
     setMembers([createMember()])
   }
@@ -435,6 +438,10 @@ function RegistrationFormContent() {
     }
     if (!socialAuth) {
       setSubmitError("È obbligatorio selezionare un'opzione per il consenso foto e video.")
+      return
+    }
+    if (!responsibilityAcceptance) {
+      setSubmitError("È obbligatorio accettare la dichiarazione di responsabilità.")
       return
     }
     setIsSubmitting(true)
@@ -800,6 +807,23 @@ function RegistrationFormContent() {
                       <SelectItem value="NO">NO</SelectItem>
                     </SelectContent>
                   </Select>
+                </div>
+
+                <div className="flex items-start space-x-3 pt-2">
+                  <Checkbox 
+                    id="responsibilityAcceptance" 
+                    checked={responsibilityAcceptance}
+                    onCheckedChange={(checked) => setResponsibilityAcceptance(checked as boolean)}
+                    className="mt-1 border-input data-[state=checked]:bg-sport data-[state=checked]:border-sport"
+                  />
+                  <div className="grid gap-1.5 leading-none">
+                    <Label
+                      htmlFor="responsibilityAcceptance"
+                      className="text-sm text-muted-foreground leading-relaxed cursor-pointer font-normal"
+                    >
+                      Dichiaro di essere a conoscenza dei possibili rischi delle attività e di sollevare la Parrocchia e gli organizzatori da responsabilità, salvo dolo o colpa grave. *
+                    </Label>
+                  </div>
                 </div>
               </div>
 

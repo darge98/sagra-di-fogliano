@@ -778,11 +778,6 @@ function RegistrationFormContent() {
                 </div>
               )}
 
-              {submitError && (
-                <div className="rounded-lg border border-destructive/50 bg-destructive/10 px-4 py-3 text-sm text-destructive">
-                  {submitError}
-                </div>
-              )}
 
               {/* Autorizzazioni */}
               <div className="space-y-3 pt-4 border-t border-border">
@@ -826,6 +821,12 @@ function RegistrationFormContent() {
                   </div>
                 </div>
               </div>
+
+              {submitError && (
+                <div className="rounded-lg border border-destructive/50 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+                  {submitError}
+                </div>
+              )}
 
               {/* Submit */}
               <Button

@@ -89,11 +89,15 @@ export function getEmailTemplate(
       <ul>
         <li><strong>IBAN:</strong> ${PAGAMENTO_IBAN} &nbsp;–&nbsp; Causale: ${causale}</li>
         <li><strong>Satispay:</strong> ${PAGAMENTO_SATISPAY}</li>
+        ${sportId.toLowerCase() === "lodolata" ? "<li><strong>In loco:</strong> Puoi pagare comodamente anche sul posto il giorno dell'evento.</li>" : ""}
       </ul>
 
       <h3>Cosa fare dopo il pagamento?</h3>
-      <p>Una volta effettuata la transazione, ti chiediamo la cortesia di rispondere a questa email allegando la distinta o lo screenshot dell'avvenuto pagamento.</p>
-      <p>Non appena riceveremo il riscontro, ti invieremo un'email di conferma definitiva con tutti i dettagli tecnici ${termineDettagli}.</p>
+      ${sportId.toLowerCase() === "lodolata" 
+        ? "<p>Se paghi online (IBAN o Satispay), rispondi a questa email allegando lo screenshot della transazione. Se invece sceglierai di pagare <strong>in loco</strong>, non dovrai inviare nulla: ti aspettiamo direttamente alla partenza!</p>"
+        : "<p>Una volta effettuata la transazione, ti chiediamo la cortesia di rispondere a questa email allegando la distinta o lo screenshot dell'avvenuto pagamento.</p>"
+      }
+      <p>Non appena riceveremo il riscontro (o ti presenterai alla partenza), ti forniremo tutti i dettagli tecnici ${termineDettagli}.</p>
       <p>Per qualsiasi dubbio o necessità, non esitare a scriverci rispondendo a questa mail.</p>
       <p>Grazie e ci vediamo in campo!<br><strong>Lo Staff della GdS</strong></p>
   `;

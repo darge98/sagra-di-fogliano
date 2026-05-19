@@ -18,11 +18,12 @@ import {
 } from "@/components/ui/select"
 import { CheckCircle2, Loader2, Send, Plus, Trash2, Users } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
+import sportEventsData from "@/data/sports-cards.json"
 
 const MAX_CERTIFICATE_MB = 20
 const MAX_CERTIFICATE_BYTES = MAX_CERTIFICATE_MB * 1024 * 1024
 
-const sportOptions = [
+const baseSportOptions = [
   {
     value: "calcio",
     label: "Calcio a 8",
@@ -30,7 +31,6 @@ const sportOptions = [
     minPlayers: 8,
     maxPlayers: 15,
     hint: "Min 8, Max 15 giocatori",
-    closed: true,
   },
   {
     value: "beachvolley",
@@ -57,6 +57,14 @@ const sportOptions = [
     hint: "Iscrizione individuale",
   },
 ]
+
+const sportOptions = baseSportOptions.map(option => {
+  const eventData = sportEventsData.find((e: any) => e.id === option.value)
+  return {
+    ...option,
+    closed: eventData?.closed === true
+  }
+})
 
 interface TeamMember {
   id: string

@@ -182,9 +182,9 @@ export function EventsSection() {
                       </li>
                     )}
                   </ul>
-                 {/* <p className="mt-5 text-xs font-bold uppercase tracking-wider group-hover:underline">
+                 {<p className="mt-5 text-xs font-bold uppercase tracking-wider group-hover:underline">
                     Scopri il programma completo
-                  </p> */}
+                  </p>}
                 </div>
               </CardContent>
             </Card>
@@ -193,7 +193,7 @@ export function EventsSection() {
       </div>
 
       {/* Day detail dialog */}
-      {/*<Dialog
+      <Dialog
         open={selectedDay !== null}
         onOpenChange={(open) => {
           if (!open) setSelectedDay(null)
@@ -220,17 +220,17 @@ export function EventsSection() {
                   </DialogDescription>
                 </div>
               </div>
-            </DialogHeader>*/}
+            </DialogHeader>
 
             {/* Timeline */}
-            {/*<div className="mt-4 space-y-0">
+            <div className="mt-4 space-y-0">
               {selectedDay.events.map((event, index) => {
                 const Icon = event.icon
                 const isLast = index === selectedDay.events.length - 1
                 return (
-                  <div key={event.title} className="flex gap-4">*/}
+                  <div key={event.title} className="flex gap-4">
                     {/* Timeline line */}
-                    {/*<div className="flex flex-col items-center">
+                    <div className="flex flex-col items-center">
                       <div
                         className={`flex items-center justify-center h-10 w-10 rounded-full shrink-0 ${event.highlight
                           ? "bg-sagra text-sagra-foreground"
@@ -242,9 +242,9 @@ export function EventsSection() {
                       {!isLast && (
                         <div className="w-px flex-1 bg-border min-h-6" />
                       )}
-                    </div>*/}
+                    </div>
                     {/* Content */}
-                    {/*<div className={`pb-6 ${isLast ? "pb-0" : ""}`}>
+                    <div className={`pb-6 ${isLast ? "pb-0" : ""}`}>
                       <div className="flex items-center gap-2 mb-1">
                         <span className="flex items-center gap-1 text-xs font-bold">
                           <Clock className="h-3 w-3" />
@@ -271,7 +271,7 @@ export function EventsSection() {
                   </div>
                 )
               })}
-            </div>*/}
+            </div>
 
             {/* Menu section - collapsible */}
             {/*selectedDay.menu && selectedDay.menu.length > 0 && (
@@ -347,7 +347,7 @@ export function EventsSection() {
             )}*/}
 
             {/* Location footer */}
-            {/*<div className="pt-4 border-t border-border flex items-center gap-2 text-sm text-muted-foreground">
+            <div className="pt-4 border-t border-border flex items-center gap-2 text-sm text-muted-foreground">
               <MapPin className="h-4 w-4" />
               <span>
                 Centro Sociale di Fogliano, Via Enrico Fermi 57 - Reggio Emilia
@@ -355,7 +355,7 @@ export function EventsSection() {
             </div>
           </DialogContent>
         )}
-      </Dialog>*/}
+      </Dialog>
     </section>
   )
 }

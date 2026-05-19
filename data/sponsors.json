@@ -32,5 +32,12 @@
     "url": "https://www.instagram.com/vf_homessentials?igsh=MTRzcjN4NnM1cmYw",
     "containerClassName": "h-32 border-2 border-border bg-[#e9dfd1] p-2 transition-all duration-300 hover:scale-105 overflow-hidden",
     "scale": 1.2
+  },
+  {
+    "id": "sponsor-albinea-car",
+    "name": "Albinea car",
+    "logo": "/sponsors/albinea-car.png",
+    "url": "",
+    "scale": 1.5
   }
 ]

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import immaginiData from "@/data/images.json"
 
 const navLinks = [
   { label: "Home", href: "#home" },
@@ -33,7 +34,16 @@ export function Navbar() {
         }`}
     >
       <div className="mx-auto max-w-7xl flex items-center justify-between px-6">
-        <a href="#home" className="flex items-center gap-2">
+        <a href="#home" className="flex items-center gap-3">
+          {immaginiData["logo-sagra"] && (
+            <img
+              src={immaginiData["logo-sagra"]}
+              alt="Logo Sagra di Fogliano"
+              className={`h-10 w-auto md:h-12 shrink-0 transition-[filter] duration-300 ${
+                scrolled ? "" : "brightness-0 invert"
+              }`}
+            />
+          )}
           <span
             className={`text-2xl font-serif font-bold transition-colors ${scrolled ? "text-primary" : "text-primary-foreground"
               }`}

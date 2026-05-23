@@ -39,5 +39,12 @@
     "logo": "/sponsors/albinea-car.png",
     "url": "",
     "scale": 1.5
+  },
+  {
+    "id": "sponsor-due-emme",
+    "name": "Due Emme",
+    "logo": "/sponsors/due-emme.jpg",
+    "url": "",
+    "scale": 1.15
   }
 ]

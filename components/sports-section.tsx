@@ -88,6 +88,13 @@ export function SportsSection() {
       <div className="mx-auto max-w-7xl">
         {/* Section header */}
         <div className="text-center mb-16">
+          {immaginiData["logo-gds"] && (
+            <img
+              src={immaginiData["logo-gds"]}
+              alt="Logo Giornate dello Sportivo"
+              className="mx-auto mb-6 h-24 md:h-32 w-auto"
+            />
+          )}
           <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground text-balance">
             Giornate dello Sportivo
           </h2>

@@ -28,6 +28,7 @@ import {
 } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
 import festivalDaysData from "@/data/sagra-cards.json"
+import immaginiData from "@/data/images.json"
 
 interface MenuItemData {
   name: string
@@ -108,6 +109,13 @@ export function EventsSection() {
       <div className="mx-auto max-w-7xl">
         {/* Section header */}
         <div className="text-center mb-16">
+          {immaginiData["logo-sagra"] && (
+            <img
+              src={immaginiData["logo-sagra"]}
+              alt="Logo Sagra di Fogliano"
+              className="mx-auto mb-6 h-24 md:h-32 w-auto"
+            />
+          )}
           <h2 className="font-serif text-4xl md:text-5xl font-bold text-foreground text-balance">
             Sagra
           </h2>

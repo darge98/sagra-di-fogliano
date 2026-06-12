@@ -377,7 +377,7 @@ function RegistrationFormContent() {
       const sportExists = sportOptions.find(s => s.value === sportParam && !s.closed)
       if (sportExists) {
         setSelectedSport(sportParam)
-        setMembers(Array.from({ length: sportExists.minPlayers }, () => createMember()))
+        setMembers([createMember()])
         
         const element = document.getElementById("iscrizione")
         if (element) {
@@ -397,7 +397,7 @@ function RegistrationFormContent() {
 
     const newSport = sportOptions.find((s) => s.value === value)
     if (newSport) {
-      setMembers(Array.from({ length: newSport.minPlayers }, () => createMember()))
+      setMembers([createMember()])
     }
   }
   function addMember() {
@@ -410,7 +410,7 @@ function RegistrationFormContent() {
   }
 
   function removeMember(id: string) {
-    if (sport && members.length > sport.minPlayers) {
+    if (members.length > 1) {
       setMembers(members.filter((m) => m.id !== id))
     }
   }
@@ -453,6 +453,14 @@ function RegistrationFormContent() {
       setSubmitError("È obbligatorio accettare la dichiarazione di responsabilità.")
       return
     }
+    // Consider only filled-in rows; skip empty ones
+    const validMembers = members.filter(
+      (m) => m.firstName.trim() || m.lastName.trim()
+    )
+    if (validMembers.length === 0) {
+      setSubmitError("Inserisci almeno un componente.")
+      return
+    }
     setIsSubmitting(true)
     try {
       const formData = new FormData()
@@ -466,7 +474,7 @@ function RegistrationFormContent() {
       formData.set(
         "members",
         JSON.stringify(
-          members.map((m) => ({
+          validMembers.map((m) => ({
             firstName: m.firstName,
             lastName: m.lastName,
             gender: m.gender,
@@ -479,7 +487,7 @@ function RegistrationFormContent() {
         )
       )
       const compressedFiles = await Promise.all(
-        members.map(async (m) => {
+        validMembers.map(async (m) => {
           const file = m.medicalCertificate
           if (!file) return null
           if (file.size > MAX_CERTIFICATE_BYTES) {
@@ -572,7 +580,7 @@ function RegistrationFormContent() {
   const isIndividual = sport?.type === "individuale"
 
   const canAddMore = sport ? (sport.maxPlayers ? members.length < sport.maxPlayers : true) : false
-  const canRemove = sport ? members.length > sport.minPlayers : false
+  const canRemove = members.length > 1
 
   return (
     <section id="iscrizione" className="py-24 px-6">
@@ -742,7 +750,7 @@ function RegistrationFormContent() {
                         index={index}
                         updateMember={updateMember}
                         removeMember={removeMember}
-                        canRemove={sport ? index >= sport.minPlayers : false}
+                        canRemove={members.length > 1}
                         showHeader={true}
                         showShirtSize={selectedSport === "4fogliano"}
                         showMedicalCertificate={selectedSport !== "lodolata"}
